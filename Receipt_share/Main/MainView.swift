@@ -12,6 +12,7 @@ struct MainView: View {
     @State var datasource: [ReceiptItem] = []
     
     var cacheManager: CacheManager = CacheManager()
+    var docManager: DocumentManager = DocumentManager()
 
     @State var showScanner: Bool = false
     
@@ -63,7 +64,7 @@ struct MainView: View {
         }
         .navigationTitle(Constants.title)
         .fullScreenCover(isPresented: $showScanner, content: {
-            ScannerController(loading: $showScanner, mode: .other, cacheManager: cacheManager)
+            ScannerController(loading: $showScanner, mode: .other, cacheManager: cacheManager, docManager: docManager)
         })
     }
     

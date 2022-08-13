@@ -18,6 +18,7 @@
 		50B5743628A7DA7F00EA2DE0 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B5743528A7DA7F00EA2DE0 /* Container.swift */; };
 		50B5743928A7DF6200EA2DE0 /* ReceiptItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B5743828A7DF6200EA2DE0 /* ReceiptItem.swift */; };
 		50B5743C28A7DFEB00EA2DE0 /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B5743B28A7DFEB00EA2DE0 /* LazyView.swift */; };
+		50B5743E28A8030D00EA2DE0 /* DocumentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B5743D28A8030D00EA2DE0 /* DocumentManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		50B5743528A7DA7F00EA2DE0 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		50B5743828A7DF6200EA2DE0 /* ReceiptItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptItem.swift; sourceTree = "<group>"; };
 		50B5743B28A7DFEB00EA2DE0 /* LazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyView.swift; sourceTree = "<group>"; };
+		50B5743D28A8030D00EA2DE0 /* DocumentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 			children = (
 				50B5743028A7D9DC00EA2DE0 /* CacheManager.swift */,
 				50B5743228A7DA0400EA2DE0 /* UserDefaultsKey.swift */,
+				50B5743D28A8030D00EA2DE0 /* DocumentManager.swift */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				5046608D28A757F40035C728 /* MainView.swift in Sources */,
 				50B5743128A7D9DC00EA2DE0 /* CacheManager.swift in Sources */,
 				50B5742E28A7D7BE00EA2DE0 /* DetailView.swift in Sources */,
+				50B5743E28A8030D00EA2DE0 /* DocumentManager.swift in Sources */,
 				50B5743628A7DA7F00EA2DE0 /* Container.swift in Sources */,
 				5046608B28A757F40035C728 /* Receipt_shareApp.swift in Sources */,
 				50B5743C28A7DFEB00EA2DE0 /* LazyView.swift in Sources */,
