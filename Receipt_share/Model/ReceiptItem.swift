@@ -53,6 +53,10 @@ struct Item: Identifiable, CustomStringConvertible, Codable, Hashable {
         return CGRect(origin: origin, size: size)
     }
     
+    var scale: CGFloat {
+        return UIScreen.main.bounds.size.width / parent.width
+    }
+    
     var description: String {
         return "\(title) at position: \(position)"
     }
