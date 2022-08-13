@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MainView: View {
     @State var showLoader: Bool = false
     @State var datasource: [ReceiptItem] = []
     
@@ -82,14 +82,14 @@ struct ContentView: View {
     }
 }
 
-extension ContentView {
+extension MainView {
     struct Constants {
         static let title = "List"
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        MainView()
     }
 }

@@ -52,7 +52,7 @@ extension DetailView {
 struct ScannedReceipt: View {
     let datasource: [Item]
     var body: some View {
-        ZStack {
+        ZStack(alignment: .leading) {
             ForEach(datasource, id: \.id) { item in
                 EditableField(title: item.title)
                     .frame(width: item.position.width, height: item.position.height)

@@ -12,7 +12,7 @@ struct Receipt_shareApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                ContentView()
+                MainView()
             }
         }
     }
