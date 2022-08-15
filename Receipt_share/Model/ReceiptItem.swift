@@ -10,15 +10,19 @@ import UIKit
 import Vision
 import VisionKit
 
-struct ReceiptItem: Identifiable, Codable, Hashable {
+struct ReceiptItem: Identifiable, Codable, Equatable, Hashable {
     
     var id: String
     var scannedDate: Date
     var items: [Item]
     
+    static func ==(lhs: ReceiptItem, rhs: ReceiptItem) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
 }
 
-struct Item: Identifiable, Codable, Hashable {
+struct Item: Identifiable, Codable, Equatable, Hashable {
     
     var id: String
     var title: String
@@ -50,6 +54,10 @@ struct Item: Identifiable, Codable, Hashable {
         let rect = DisplayRect(width: width, height: height, xaxis: xaxis, yaxis: yaxis)
         
         return rect
+    }
+    
+    mutating func changeTitle(value: String) {
+        self.title = value
     }
 }
 

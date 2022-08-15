@@ -30,4 +30,17 @@ class CacheManager {
         }
         reload?()
     }
+    
+    func replaceReceipt(_ receipt: ReceiptItem) {
+        var receipts = loadRecceiptList()
+        if let index = receipts.firstIndex(of: receipt) {
+            receipts[index] = receipt
+            
+            let encoder = Container.jsonEncoder
+            if let encoded = try? encoder.encode(receipts) {
+                UserDefaults.standard.set(encoded, forKey: UserDefaultsKey.receiptList)
+            }
+            reload?()
+        }
+    }
 }

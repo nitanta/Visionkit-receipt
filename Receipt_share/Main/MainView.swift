@@ -31,7 +31,7 @@ struct MainView: View {
             
             Group {
                 NavigationLink("", isActive: $showDetail) {
-                    LazyView(DetailView(datasource: $detailItem))
+                    LazyView(DetailView(cacheManager: cacheManager, datasource: $detailItem))
                 }
                 
             }
@@ -50,7 +50,7 @@ struct MainView: View {
                 
             }
             .toolbar {
-                Button("Scan") {
+                Button(Constants.scan) {
                     showScanner.toggle()
                 }
             }
@@ -86,6 +86,7 @@ struct MainView: View {
 extension MainView {
     struct Constants {
         static let title = "List"
+        static let scan = "Scan"
     }
 }
 
