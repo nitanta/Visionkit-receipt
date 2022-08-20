@@ -14,7 +14,7 @@ struct ReceiptItem: Identifiable, Codable, Equatable, Hashable {
     
     var id: String
     var scannedDate: Date
-    var items: [Item]
+    var items: [Column]
     
     static func ==(lhs: ReceiptItem, rhs: ReceiptItem) -> Bool {
         return lhs.id == rhs.id
@@ -75,5 +75,35 @@ struct DisplayRect: Identifiable, Codable, Hashable {
         self.height = height
         self.xaxis = xaxis
         self.yaxis = yaxis
+    }
+}
+
+struct Column: Identifiable, Codable, Hashable {
+    var id: Int
+    var items: [Item]
+    
+    init(id: Int, items: [Item]) {
+        self.id = id
+        self.items = items
+    }
+    
+    var type: ColumnType {
+        switch items.count {
+        case 1:
+            return .center
+        case 2:
+            return .leading
+        case 3:
+            return .trailing
+        default:
+            return .separated
+        }
+    }
+    
+    enum ColumnType {
+        case leading
+        case center
+        case trailing
+        case separated
     }
 }

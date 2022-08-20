@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5029283E28B10C7100D2C4C3 /* App_model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5029283C28B10C7100D2C4C3 /* App_model.xcdatamodeld */; };
 		5046608B28A757F40035C728 /* Receipt_shareApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5046608A28A757F40035C728 /* Receipt_shareApp.swift */; };
 		5046608D28A757F40035C728 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5046608C28A757F40035C728 /* MainView.swift */; };
 		5046608F28A757F80035C728 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5046608E28A757F80035C728 /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5029283D28B10C7100D2C4C3 /* App_model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = App_model.xcdatamodel; sourceTree = "<group>"; };
 		5046608728A757F40035C728 /* Receipt_share.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Receipt_share.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5046608A28A757F40035C728 /* Receipt_shareApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Receipt_shareApp.swift; sourceTree = "<group>"; };
 		5046608C28A757F40035C728 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -51,6 +53,7 @@
 		5046607E28A757F30035C728 = {
 			isa = PBXGroup;
 			children = (
+				5029283C28B10C7100D2C4C3 /* App_model.xcdatamodeld */,
 				5046608928A757F40035C728 /* Receipt_share */,
 				5046608828A757F40035C728 /* Products */,
 			);
@@ -210,6 +213,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50B5743328A7DA0400EA2DE0 /* UserDefaultsKey.swift in Sources */,
+				5029283E28B10C7100D2C4C3 /* App_model.xcdatamodeld in Sources */,
 				5046608D28A757F40035C728 /* MainView.swift in Sources */,
 				50B5743128A7D9DC00EA2DE0 /* CacheManager.swift in Sources */,
 				50B5742E28A7D7BE00EA2DE0 /* DetailView.swift in Sources */,
@@ -421,6 +425,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		5029283C28B10C7100D2C4C3 /* App_model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				5029283D28B10C7100D2C4C3 /* App_model.xcdatamodel */,
+			);
+			currentVersion = 5029283D28B10C7100D2C4C3 /* App_model.xcdatamodel */;
+			path = App_model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 5046607F28A757F30035C728 /* Project object */;
 }
