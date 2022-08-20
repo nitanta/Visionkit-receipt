@@ -8,19 +8,6 @@
 import SwiftUI
 import Combine
 
-enum ColumnType {
-    case title
-    case address
-    case vat
-    case date
-    case itemheader
-    case itemcontent
-    case grosstotal
-    case discount
-    case nettotal
-    case footer
-}
-
 struct DetailView: View {
     let cacheManager: CacheManager
     @Binding var datasource: ReceiptItem?
@@ -43,13 +30,16 @@ struct DetailView: View {
             if let datasource = datasource {
                 ForEach(datasource.items) { item in
                     ColumView(data: item)
+                        .onTapGesture {
+                            editValueAlertTF(title: Constants.edit, message: Constants.message, colums: item, primaryTitle: Constants.save, secondaryTitle: Constants.cancel) { new in
+                                editColumn(newValue: new, oldValue: item)
+                            } secondaryAction: {}
+                        }
                 }
             }
             
             Spacer()
         }
-        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-        .background(.white)
     }
     
     struct ColumView: View {
@@ -60,17 +50,11 @@ struct DetailView: View {
                 
                 ForEach(data.items) { item in
                     Text(item.title)
-                        .foregroundColor(.black)
-                        .font(.system(size: 12))
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.primary)
+                        .font(.system(size: 14))
                         //.frame(width: item.displayRect!.width, height: item.displayRect!.height)
                         //.offset(x: item.displayRect!.xaxis, y: 0)
-                        .onTapGesture {
-                            alertTF(title: Constants.edit, message: Constants.message, hintText: "", value: item.title, primaryTitle: Constants.save, secondaryTitle: Constants.cancel) { newvalue in
-                                
-                                //self.editField(newValue: newvalue, item: item)
-                                
-                            } secondaryAction: {}
-                        }
                 }
                 
                 
@@ -100,16 +84,12 @@ struct DetailView: View {
     }
     
     
-//    func editField(newValue: String, item: Item) {
-//        var newItem = item
-//
-//        newItem.title = newValue
-//
-//        if var newDatasource = datasource, let index = newDatasource.items.firstIndex(of: item) {
-//            newDatasource.items[index] = newItem
-//            cacheManager.replaceReceipt(newDatasource)
-//        }
-//    }
+    func editColumn(newValue: Column, oldValue: Column) {
+        if var newDatasource = datasource, let index = newDatasource.items.firstIndex(of: oldValue) {
+            newDatasource.items[index] = newValue
+            cacheManager.replaceReceipt(newDatasource)
+        }
+    }
 }
 
 extension DetailView {
@@ -123,11 +103,16 @@ extension DetailView {
 }
 
 extension View {
-    func alertTF(title: String, message: String, hintText: String, value: String, primaryTitle: String, secondaryTitle: String, primaryAction: @escaping (String) -> (), secondaryAction: @escaping () -> ()) {
+    func editValueAlertTF(title: String, message: String, colums: Column, primaryTitle: String, secondaryTitle: String, primaryAction: @escaping (Column) -> (), secondaryAction: @escaping () -> ()) {
+        var editableColumn = colums
+        let editableItems = colums.items
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addTextField { field in
-            field.placeholder = hintText
-            field.text = value
+        editableItems.enumerated().forEach { item in
+            alert.addTextField { field in
+                field.placeholder = item.element.title
+                field.tag = item.offset
+                field.text = item.element.title
+            }
         }
         
         alert.addAction(UIAlertAction(title: secondaryTitle, style: .cancel, handler: { _ in
@@ -135,8 +120,14 @@ extension View {
         }))
         
         alert.addAction(UIAlertAction(title: primaryTitle, style: .default, handler: { _ in
-            if let text = alert.textFields?[0].text {
-                primaryAction(text)
+            if let fields = alert.textFields {
+                let editedItems = fields.compactMap { field -> Item? in
+                    guard var editItems = editableItems[safe: field.tag] else { return nil }
+                    editItems.title = field.text ?? field.placeholder ?? ""
+                    return editItems
+                }
+                editableColumn.items = editedItems
+                primaryAction(editableColumn)
             }
         }))
         
@@ -147,5 +138,11 @@ extension View {
         guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return .init() }
         guard let root = scene.windows.first?.rootViewController else { return .init() }
         return root
+    }
+}
+
+extension Array {
+    subscript (safe index: Index) -> Element? {
+        0 <= index && index < count ? self[index] : nil
     }
 }
