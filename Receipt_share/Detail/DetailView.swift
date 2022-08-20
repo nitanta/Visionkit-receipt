@@ -50,7 +50,7 @@ struct DetailView: View {
                 
                 ForEach(data.items) { item in
                     Text(item.title)
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(.primary)
                         .font(.system(size: 14))
                         //.frame(width: item.displayRect!.width, height: item.displayRect!.height)
@@ -59,6 +59,8 @@ struct DetailView: View {
                 
                 
             }
+            .padding(.horizontal)
+            .padding(.vertical, 8)
         }
     }
     
@@ -88,6 +90,8 @@ struct DetailView: View {
         if var newDatasource = datasource, let index = newDatasource.items.firstIndex(of: oldValue) {
             newDatasource.items[index] = newValue
             cacheManager.replaceReceipt(newDatasource)
+            
+            self.datasource = newDatasource
         }
     }
 }

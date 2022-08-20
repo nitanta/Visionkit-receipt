@@ -121,6 +121,8 @@ protocol ScannedDataParseable {
 }
 
 class OtherParser: ScannedDataParseable {
+    
+    var filterOutCharacterSets: [String]  = [":", "..", "#", "*", "-", "_"]
 
     func generateDatasource(recognizedText: [VNRecognizedTextObservation], image: UIImage) -> [Column] {
         let maximumCandidates = 1
@@ -135,7 +137,9 @@ class OtherParser: ScannedDataParseable {
             return Int((device.displayRect?.yaxis ?? 0) / 20)
         }
         
-        let columns = grouped.map { Column(id: $0.key, items: $0.value.sorted { $0.displayRect?.xaxis ?? 0 < $1.displayRect?.xaxis ?? 0 }) }.sorted { col1, col2 in
+        let columns = grouped.map {
+            Column(id: $0.key, items: $0.value.filter { !filterOutCharacterSets.contains($0.title) }.sorted { $0.displayRect?.xaxis ?? 0 < $1.displayRect?.xaxis ?? 0 })
+        }.sorted { col1, col2 in
             return col1.id < col2.id
         }
         
