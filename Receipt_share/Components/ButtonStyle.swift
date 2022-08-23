@@ -12,7 +12,7 @@ struct MultipeerButtonStyle: ButtonStyle {
     configuration.label
       .padding()
       .font(.headline)
-      .background(configuration.isPressed ? Color("rw-dark") : Color.accentColor)
+      .background(configuration.isPressed ? .green : Color.accentColor)
       .cornerRadius(9.0)
       .foregroundColor(.white)
   }
@@ -26,7 +26,7 @@ struct ChatMessageButtonStyle: ButtonStyle {
       Spacer()
     }
     .padding(8)
-    .background(configuration.isPressed ? Color("rw-dark") : Color.green)
+    .background(configuration.isPressed ? .green : Color.green)
     .cornerRadius(9.0)
     .foregroundColor(.white)
   }
@@ -35,7 +35,7 @@ struct ChatMessageButtonStyle: ButtonStyle {
 struct FooterButtonStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .foregroundColor(configuration.isPressed ? Color("rw-dark") : .accentColor)
+          .foregroundColor(configuration.isPressed ? .green : .accentColor)
       .font(.headline)
       .padding(8)
   }
