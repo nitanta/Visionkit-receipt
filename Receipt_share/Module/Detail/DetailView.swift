@@ -9,6 +9,8 @@ import SwiftUI
 import Combine
 
 struct DetailView: View {
+    @ObservedObject private var chatConnectionManager = ChatConnectionManager()
+
     let cacheManager: CacheManager
     @Binding var datasource: ReceiptItem?
     var docManager: DocumentManager = DocumentManager()
@@ -16,13 +18,26 @@ struct DetailView: View {
     var editedFields: [String: String] = [:]
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
+        ZStack {
             
-            contructedView
-            //overlayView
+            NavigationLink(destination: ChatView().environmentObject(chatConnectionManager), isActive: $chatConnectionManager.connectedToChat) {
+                EmptyView()
+            }
+            
+            ScrollView(showsIndicators: false) {
+                
+                contructedView
+                //overlayView
+                    .toolbar {
+                        Button(Constants.start) {
+                            chatConnectionManager.host()
+                        }
+                    }
+                
+            }
+            .navigationTitle(Constants.title)
             
         }
-        .navigationTitle(Constants.title)
     }
     
     var contructedView: some View {
@@ -103,6 +118,7 @@ extension DetailView {
         static let message = "Edit values for the field"
         static let save = "Save"
         static let cancel = "Cancel"
+        static let start = "Start"
     }
 }
 

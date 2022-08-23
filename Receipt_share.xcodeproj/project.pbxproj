@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50127A3B28B51B69004E7844 /* ChatConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A3A28B51B69004E7844 /* ChatConnectionManager.swift */; };
+		50127A3E28B51B8E004E7844 /* BroadcastingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A3D28B51B8E004E7844 /* BroadcastingManager.swift */; };
+		50127A4128B51BFA004E7844 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A4028B51BFA004E7844 /* Formatter.swift */; };
+		50127A4928B51CD1004E7844 /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A4428B51CD1004E7844 /* ChatListView.swift */; };
+		50127A4A28B51CD1004E7844 /* MessageBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A4528B51CD1004E7844 /* MessageBodyView.swift */; };
+		50127A4C28B51CD1004E7844 /* TimestampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A4728B51CD1004E7844 /* TimestampView.swift */; };
+		50127A4D28B51CD1004E7844 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A4828B51CD1004E7844 /* ChatView.swift */; };
+		50127A5028B51D1C004E7844 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A4F28B51D1C004E7844 /* ButtonStyle.swift */; };
 		5029283E28B10C7100D2C4C3 /* App_model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5029283C28B10C7100D2C4C3 /* App_model.xcdatamodeld */; };
 		5046608B28A757F40035C728 /* Receipt_shareApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5046608A28A757F40035C728 /* Receipt_shareApp.swift */; };
 		5046608D28A757F40035C728 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5046608C28A757F40035C728 /* MainView.swift */; };
@@ -23,6 +31,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		50127A3A28B51B69004E7844 /* ChatConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatConnectionManager.swift; sourceTree = "<group>"; };
+		50127A3D28B51B8E004E7844 /* BroadcastingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastingManager.swift; sourceTree = "<group>"; };
+		50127A4028B51BFA004E7844 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		50127A4428B51CD1004E7844 /* ChatListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListView.swift; sourceTree = "<group>"; };
+		50127A4528B51CD1004E7844 /* MessageBodyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBodyView.swift; sourceTree = "<group>"; };
+		50127A4728B51CD1004E7844 /* TimestampView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimestampView.swift; sourceTree = "<group>"; };
+		50127A4828B51CD1004E7844 /* ChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		50127A4F28B51D1C004E7844 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		5029283D28B10C7100D2C4C3 /* App_model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = App_model.xcdatamodel; sourceTree = "<group>"; };
 		5046608728A757F40035C728 /* Receipt_share.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Receipt_share.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5046608A28A757F40035C728 /* Receipt_shareApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Receipt_shareApp.swift; sourceTree = "<group>"; };
@@ -50,6 +66,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		50127A3928B51B59004E7844 /* Connection */ = {
+			isa = PBXGroup;
+			children = (
+				50127A3D28B51B8E004E7844 /* BroadcastingManager.swift */,
+				50127A3A28B51B69004E7844 /* ChatConnectionManager.swift */,
+			);
+			path = Connection;
+			sourceTree = "<group>";
+		};
+		50127A3F28B51BEE004E7844 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				50127A4028B51BFA004E7844 /* Formatter.swift */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		50127A4328B51CD1004E7844 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				50127A4428B51CD1004E7844 /* ChatListView.swift */,
+				50127A4528B51CD1004E7844 /* MessageBodyView.swift */,
+				50127A4728B51CD1004E7844 /* TimestampView.swift */,
+				50127A4828B51CD1004E7844 /* ChatView.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		50127A4E28B51CE6004E7844 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				50127A4328B51CD1004E7844 /* Chat */,
+				50B5742C28A7D7AF00EA2DE0 /* Detail */,
+				50B5742B28A7D76300EA2DE0 /* Main */,
+				5046608A28A757F40035C728 /* Receipt_shareApp.swift */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
 		5046607E28A757F30035C728 = {
 			isa = PBXGroup;
 			children = (
@@ -70,13 +125,13 @@
 		5046608928A757F40035C728 /* Receipt_share */ = {
 			isa = PBXGroup;
 			children = (
+				50127A4E28B51CE6004E7844 /* Module */,
+				50127A3F28B51BEE004E7844 /* Utility */,
+				50127A3928B51B59004E7844 /* Connection */,
 				50B5743A28A7DFDD00EA2DE0 /* Components */,
 				50B5743728A7DF5700EA2DE0 /* Model */,
 				50B5743428A7DA7500EA2DE0 /* Parser */,
 				50B5742F28A7D9D000EA2DE0 /* Cache */,
-				50B5742C28A7D7AF00EA2DE0 /* Detail */,
-				50B5742B28A7D76300EA2DE0 /* Main */,
-				5046608A28A757F40035C728 /* Receipt_shareApp.swift */,
 				5046608E28A757F80035C728 /* Assets.xcassets */,
 				5046609028A757F80035C728 /* Preview Content */,
 			);
@@ -138,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				50B5743B28A7DFEB00EA2DE0 /* LazyView.swift */,
+				50127A4F28B51D1C004E7844 /* ButtonStyle.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -212,17 +268,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50127A4D28B51CD1004E7844 /* ChatView.swift in Sources */,
 				50B5743328A7DA0400EA2DE0 /* UserDefaultsKey.swift in Sources */,
+				50127A4928B51CD1004E7844 /* ChatListView.swift in Sources */,
 				5029283E28B10C7100D2C4C3 /* App_model.xcdatamodeld in Sources */,
 				5046608D28A757F40035C728 /* MainView.swift in Sources */,
 				50B5743128A7D9DC00EA2DE0 /* CacheManager.swift in Sources */,
+				50127A3E28B51B8E004E7844 /* BroadcastingManager.swift in Sources */,
 				50B5742E28A7D7BE00EA2DE0 /* DetailView.swift in Sources */,
 				50B5743E28A8030D00EA2DE0 /* DocumentManager.swift in Sources */,
 				50B5743628A7DA7F00EA2DE0 /* Container.swift in Sources */,
 				5046608B28A757F40035C728 /* Receipt_shareApp.swift in Sources */,
 				50B5743C28A7DFEB00EA2DE0 /* LazyView.swift in Sources */,
+				50127A4128B51BFA004E7844 /* Formatter.swift in Sources */,
+				50127A5028B51D1C004E7844 /* ButtonStyle.swift in Sources */,
+				50127A3B28B51B69004E7844 /* ChatConnectionManager.swift in Sources */,
 				5046609928A75A2A0035C728 /* ScannerController.swift in Sources */,
+				50127A4A28B51CD1004E7844 /* MessageBodyView.swift in Sources */,
 				50B5743928A7DF6200EA2DE0 /* ReceiptItem.swift in Sources */,
+				50127A4C28B51CD1004E7844 /* TimestampView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -87,23 +87,4 @@ struct Column: Identifiable, Codable, Hashable {
         self.items = items
     }
     
-    var type: ColumnType {
-        switch items.count {
-        case 1:
-            return .center
-        case 2:
-            return .leading
-        case 3:
-            return .trailing
-        default:
-            return .separated
-        }
-    }
-    
-    enum ColumnType {
-        case leading
-        case center
-        case trailing
-        case separated
-    }
 }

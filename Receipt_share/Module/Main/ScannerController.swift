@@ -122,6 +122,7 @@ protocol ScannedDataParseable {
 
 class OtherParser: ScannedDataParseable {
     
+    
     var filterOutCharacterSets: [String]  = [":", "..", "#", "*", "-", "_"]
 
     func generateDatasource(recognizedText: [VNRecognizedTextObservation], image: UIImage) -> [Column] {

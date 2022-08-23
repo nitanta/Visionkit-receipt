@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct MainView: View {
+    @ObservedObject private var chatConnectionManager = ChatConnectionManager()
+    
     @State var showLoader: Bool = false
     @State var datasource: [ReceiptItem] = []
     
     var cacheManager: CacheManager = CacheManager()
     var docManager: DocumentManager = DocumentManager()
-
+    
     @State var showScanner: Bool = false
     
     @State var detailItem: ReceiptItem? = nil
     @State var showDetail: Bool = false
-        
+    
     var body: some View {
         ZStack {
             
@@ -34,6 +36,9 @@ struct MainView: View {
                     LazyView(DetailView(cacheManager: cacheManager, datasource: $detailItem))
                 }
                 
+                NavigationLink(destination: ChatView().environmentObject(chatConnectionManager), isActive: $chatConnectionManager.connectedToChat) {
+                    EmptyView()
+                }
             }
             
             VStack {
@@ -50,8 +55,19 @@ struct MainView: View {
                 
             }
             .toolbar {
-                Button(Constants.scan) {
-                    showScanner.toggle()
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button(Constants.scan) {
+#if targetEnvironment(simulator)
+                        let coordinator = ScannerController.Coordinator(loading: .constant(false), cacheManager: CacheManager(), documentManager: DocumentManager(), parser: OtherParser())
+                        coordinator.processImage(image: UIImage(named: "test_receipt")!)
+#else
+                        showScanner.toggle()
+#endif
+                    }
+                    
+                    Button(Constants.join) {
+                        chatConnectionManager.join()
+                    }
                 }
             }
             
@@ -74,7 +90,7 @@ struct MainView: View {
         var body: some View {
             HStack {
                 Text(item.scannedDate.formatted(.dateTime))
-                    .foregroundColor(.primary)
+                    .foregroundColor(.black)
                 
                 Spacer()
             }
@@ -87,6 +103,7 @@ extension MainView {
     struct Constants {
         static let title = "List"
         static let scan = "Scan"
+        static let join = "Join"
     }
 }
 
