@@ -15,17 +15,22 @@
 		50127A4C28B51CD1004E7844 /* TimestampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A4728B51CD1004E7844 /* TimestampView.swift */; };
 		50127A4D28B51CD1004E7844 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A4828B51CD1004E7844 /* ChatView.swift */; };
 		50127A5028B51D1C004E7844 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A4F28B51D1C004E7844 /* ButtonStyle.swift */; };
-		5029283E28B10C7100D2C4C3 /* App_model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5029283C28B10C7100D2C4C3 /* App_model.xcdatamodeld */; };
+		502851E628BD22F5007D5512 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502851E528BD22F5007D5512 /* StringExtension.swift */; };
+		5029283E28B10C7100D2C4C3 /* Receipt_share.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5029283C28B10C7100D2C4C3 /* Receipt_share.xcdatamodeld */; };
 		5046608B28A757F40035C728 /* Receipt_shareApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5046608A28A757F40035C728 /* Receipt_shareApp.swift */; };
 		5046608D28A757F40035C728 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5046608C28A757F40035C728 /* MainView.swift */; };
 		5046608F28A757F80035C728 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5046608E28A757F80035C728 /* Assets.xcassets */; };
 		5046609228A757F80035C728 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5046609128A757F80035C728 /* Preview Assets.xcassets */; };
 		5046609928A75A2A0035C728 /* ScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5046609828A75A2A0035C728 /* ScannerController.swift */; };
+		5083AD3128BD11F9007B8D77 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5083AD3028BD11F9007B8D77 /* PersistenceController.swift */; };
+		5083AD3328BD123F007B8D77 /* DatabaseManageable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5083AD3228BD123F007B8D77 /* DatabaseManageable.swift */; };
+		5083AD3728BD1292007B8D77 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5083AD3628BD1292007B8D77 /* Helper.swift */; };
+		5083AD3928BD12EB007B8D77 /* ReceiptItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5083AD3828BD12EB007B8D77 /* ReceiptItem.swift */; };
+		5083AD3B28BD1358007B8D77 /* Column.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5083AD3A28BD1358007B8D77 /* Column.swift */; };
+		5083AD3D28BD13EA007B8D77 /* DisplayRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5083AD3C28BD13EA007B8D77 /* DisplayRect.swift */; };
+		5083AD3F28BD13F3007B8D77 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5083AD3E28BD13F3007B8D77 /* Item.swift */; };
 		50B5742E28A7D7BE00EA2DE0 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B5742D28A7D7BE00EA2DE0 /* DetailView.swift */; };
-		50B5743128A7D9DC00EA2DE0 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B5743028A7D9DC00EA2DE0 /* CacheManager.swift */; };
-		50B5743328A7DA0400EA2DE0 /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B5743228A7DA0400EA2DE0 /* UserDefaultsKey.swift */; };
 		50B5743628A7DA7F00EA2DE0 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B5743528A7DA7F00EA2DE0 /* Container.swift */; };
-		50B5743928A7DF6200EA2DE0 /* ReceiptItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B5743828A7DF6200EA2DE0 /* ReceiptItem.swift */; };
 		50B5743C28A7DFEB00EA2DE0 /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B5743B28A7DFEB00EA2DE0 /* LazyView.swift */; };
 		50B5743E28A8030D00EA2DE0 /* DocumentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B5743D28A8030D00EA2DE0 /* DocumentManager.swift */; };
 /* End PBXBuildFile section */
@@ -39,6 +44,7 @@
 		50127A4728B51CD1004E7844 /* TimestampView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimestampView.swift; sourceTree = "<group>"; };
 		50127A4828B51CD1004E7844 /* ChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		50127A4F28B51D1C004E7844 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
+		502851E528BD22F5007D5512 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		5029283D28B10C7100D2C4C3 /* App_model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = App_model.xcdatamodel; sourceTree = "<group>"; };
 		5046608728A757F40035C728 /* Receipt_share.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Receipt_share.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5046608A28A757F40035C728 /* Receipt_shareApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Receipt_shareApp.swift; sourceTree = "<group>"; };
@@ -46,11 +52,15 @@
 		5046608E28A757F80035C728 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5046609128A757F80035C728 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5046609828A75A2A0035C728 /* ScannerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerController.swift; sourceTree = "<group>"; };
+		5083AD3028BD11F9007B8D77 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		5083AD3228BD123F007B8D77 /* DatabaseManageable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManageable.swift; sourceTree = "<group>"; };
+		5083AD3628BD1292007B8D77 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		5083AD3828BD12EB007B8D77 /* ReceiptItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptItem.swift; sourceTree = "<group>"; };
+		5083AD3A28BD1358007B8D77 /* Column.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Column.swift; sourceTree = "<group>"; };
+		5083AD3C28BD13EA007B8D77 /* DisplayRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayRect.swift; sourceTree = "<group>"; };
+		5083AD3E28BD13F3007B8D77 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		50B5742D28A7D7BE00EA2DE0 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
-		50B5743028A7D9DC00EA2DE0 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
-		50B5743228A7DA0400EA2DE0 /* UserDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
 		50B5743528A7DA7F00EA2DE0 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
-		50B5743828A7DF6200EA2DE0 /* ReceiptItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptItem.swift; sourceTree = "<group>"; };
 		50B5743B28A7DFEB00EA2DE0 /* LazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyView.swift; sourceTree = "<group>"; };
 		50B5743D28A8030D00EA2DE0 /* DocumentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,6 +89,8 @@
 			isa = PBXGroup;
 			children = (
 				50127A4028B51BFA004E7844 /* Formatter.swift */,
+				5083AD3628BD1292007B8D77 /* Helper.swift */,
+				502851E528BD22F5007D5512 /* StringExtension.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -108,7 +120,7 @@
 		5046607E28A757F30035C728 = {
 			isa = PBXGroup;
 			children = (
-				5029283C28B10C7100D2C4C3 /* App_model.xcdatamodeld */,
+				5029283C28B10C7100D2C4C3 /* Receipt_share.xcdatamodeld */,
 				5046608928A757F40035C728 /* Receipt_share */,
 				5046608828A757F40035C728 /* Products */,
 			);
@@ -146,6 +158,26 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		5083AD3428BD124D007B8D77 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				5083AD3028BD11F9007B8D77 /* PersistenceController.swift */,
+				5083AD3228BD123F007B8D77 /* DatabaseManageable.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		5083AD3528BD125A007B8D77 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5083AD3828BD12EB007B8D77 /* ReceiptItem.swift */,
+				5083AD3A28BD1358007B8D77 /* Column.swift */,
+				5083AD3C28BD13EA007B8D77 /* DisplayRect.swift */,
+				5083AD3E28BD13F3007B8D77 /* Item.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		50B5742B28A7D76300EA2DE0 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,8 +198,6 @@
 		50B5742F28A7D9D000EA2DE0 /* Cache */ = {
 			isa = PBXGroup;
 			children = (
-				50B5743028A7D9DC00EA2DE0 /* CacheManager.swift */,
-				50B5743228A7DA0400EA2DE0 /* UserDefaultsKey.swift */,
 				50B5743D28A8030D00EA2DE0 /* DocumentManager.swift */,
 			);
 			path = Cache;
@@ -184,7 +214,8 @@
 		50B5743728A7DF5700EA2DE0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				50B5743828A7DF6200EA2DE0 /* ReceiptItem.swift */,
+				5083AD3528BD125A007B8D77 /* Models */,
+				5083AD3428BD124D007B8D77 /* Database */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -269,23 +300,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				50127A4D28B51CD1004E7844 /* ChatView.swift in Sources */,
-				50B5743328A7DA0400EA2DE0 /* UserDefaultsKey.swift in Sources */,
 				50127A4928B51CD1004E7844 /* ChatListView.swift in Sources */,
-				5029283E28B10C7100D2C4C3 /* App_model.xcdatamodeld in Sources */,
+				5029283E28B10C7100D2C4C3 /* Receipt_share.xcdatamodeld in Sources */,
+				5083AD3328BD123F007B8D77 /* DatabaseManageable.swift in Sources */,
 				5046608D28A757F40035C728 /* MainView.swift in Sources */,
-				50B5743128A7D9DC00EA2DE0 /* CacheManager.swift in Sources */,
 				50127A3E28B51B8E004E7844 /* BroadcastingManager.swift in Sources */,
 				50B5742E28A7D7BE00EA2DE0 /* DetailView.swift in Sources */,
 				50B5743E28A8030D00EA2DE0 /* DocumentManager.swift in Sources */,
+				5083AD3128BD11F9007B8D77 /* PersistenceController.swift in Sources */,
+				5083AD3B28BD1358007B8D77 /* Column.swift in Sources */,
+				5083AD3728BD1292007B8D77 /* Helper.swift in Sources */,
+				5083AD3928BD12EB007B8D77 /* ReceiptItem.swift in Sources */,
 				50B5743628A7DA7F00EA2DE0 /* Container.swift in Sources */,
 				5046608B28A757F40035C728 /* Receipt_shareApp.swift in Sources */,
 				50B5743C28A7DFEB00EA2DE0 /* LazyView.swift in Sources */,
 				50127A4128B51BFA004E7844 /* Formatter.swift in Sources */,
 				50127A5028B51D1C004E7844 /* ButtonStyle.swift in Sources */,
 				50127A3B28B51B69004E7844 /* ChatConnectionManager.swift in Sources */,
+				5083AD3F28BD13F3007B8D77 /* Item.swift in Sources */,
 				5046609928A75A2A0035C728 /* ScannerController.swift in Sources */,
+				502851E628BD22F5007D5512 /* StringExtension.swift in Sources */,
 				50127A4A28B51CD1004E7844 /* MessageBodyView.swift in Sources */,
-				50B5743928A7DF6200EA2DE0 /* ReceiptItem.swift in Sources */,
+				5083AD3D28BD13EA007B8D77 /* DisplayRect.swift in Sources */,
 				50127A4C28B51CD1004E7844 /* TimestampView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -491,13 +527,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		5029283C28B10C7100D2C4C3 /* App_model.xcdatamodeld */ = {
+		5029283C28B10C7100D2C4C3 /* Receipt_share.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				5029283D28B10C7100D2C4C3 /* App_model.xcdatamodel */,
 			);
 			currentVersion = 5029283D28B10C7100D2C4C3 /* App_model.xcdatamodel */;
-			path = App_model.xcdatamodeld;
+			path = Receipt_share.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G72" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Column" representedClassName=".Column" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="key" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item" inverseName="column" inverseEntity="Item"/>
+        <relationship name="receiptItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ReceiptItem" inverseName="item" inverseEntity="ReceiptItem"/>
+    </entity>
+    <entity name="DisplayRect" representedClassName=".DisplayRect" syncable="YES">
+        <attribute name="height" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="width" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="xaxis" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="yaxis" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="item" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Item" inverseName="displayRect" inverseEntity="Item"/>
+    </entity>
+    <entity name="Item" representedClassName=".Item" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="column" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Column" inverseName="items" inverseEntity="Column"/>
+        <relationship name="displayRect" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DisplayRect" inverseName="item" inverseEntity="DisplayRect"/>
+    </entity>
+    <entity name="ReceiptItem" representedClassName=".ReceiptItem" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="scannedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="item" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Column" inverseName="receiptItem" inverseEntity="Column"/>
+    </entity>
+    <elements>
+        <element name="Column" positionX="-54" positionY="-9" width="128" height="89"/>
+        <element name="DisplayRect" positionX="-36" positionY="9" width="128" height="119"/>
+        <element name="Item" positionX="-18" positionY="27" width="128" height="89"/>
+        <element name="ReceiptItem" positionX="-63" positionY="-18" width="128" height="74"/>
+    </elements>
+</model>

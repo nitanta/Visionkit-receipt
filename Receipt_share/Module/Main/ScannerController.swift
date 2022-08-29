@@ -22,7 +22,7 @@ struct ScannerController: UIViewControllerRepresentable {
     
     @Binding var loading: Bool
     var mode: ScanMode
-    let cacheManager: CacheManager
+    let cacheManager: PersistenceController
     let docManager: DocumentManager
     
     func getScanner() -> ScannedDataParseable {
@@ -44,7 +44,7 @@ struct ScannerController: UIViewControllerRepresentable {
     
     class Coordinator: NSObject, VNDocumentCameraViewControllerDelegate {
         @Binding var loading: Bool
-        let cacheManager: CacheManager
+        let cacheManager: PersistenceController
         let docManager: DocumentManager
         let parser: ScannedDataParseable
         var textRecognitionRequest = VNRecognizeTextRequest()
@@ -52,7 +52,7 @@ struct ScannerController: UIViewControllerRepresentable {
         var referenceImageSize: CGSize = .zero
         var referenceImage: UIImage? = nil
         
-        init(loading: Binding<Bool>, cacheManager: CacheManager, documentManager: DocumentManager, parser: ScannedDataParseable) {
+        init(loading: Binding<Bool>, cacheManager: PersistenceController, documentManager: DocumentManager, parser: ScannedDataParseable) {
             _loading = loading
             self.cacheManager = cacheManager
             self.docManager = documentManager
@@ -69,9 +69,9 @@ struct ScannerController: UIViewControllerRepresentable {
                         DispatchQueue.main.async {
                             if let referenceImage = self.referenceImage {
                                 let result = self.parser.generateDatasource(recognizedText: requestResults, image: referenceImage)
-                                let receipt = ReceiptItem(id: UUID().uuidString, scannedDate: Date(), items: result)
-                                self.docManager.saveImage(image: referenceImage, id: receipt.id)
-                                self.cacheManager.addReceipt(receipt)
+                                let receipt = ReceiptItem.save(UUID().uuidString, scannedDate: Date(), item: result)
+                                self.docManager.saveImage(image: referenceImage, id: receipt.id.safeUnwrapped)
+                                self.cacheManager.saveContext()
                             }
                         }
                     }
@@ -124,34 +124,34 @@ class OtherParser: ScannedDataParseable {
     
     
     var filterOutCharacterSets: [String]  = [":", "..", "#", "*", "-", "_"]
-
+    
     func generateDatasource(recognizedText: [VNRecognizedTextObservation], image: UIImage) -> [Column] {
         let maximumCandidates = 1
-  
+
         let items = recognizedText.compactMap { observation -> Item? in
             guard let candidate = observation.topCandidates(maximumCandidates).first else { return nil }
-                        
-            return Item(title: candidate.string, observation: candidate, image: image)
+
+            return Item.save(UUID().uuidString, title: candidate.string, observation: candidate, image: image)
         }
-        
+
         let grouped = Dictionary(grouping: items) { (device) -> Int in
             return Int((device.displayRect?.yaxis ?? 0) / 20)
         }
-        
+
         let columns = grouped.map {
-            Column(id: $0.key, items: $0.value.filter { !filterOutCharacterSets.contains($0.title) }.sorted { $0.displayRect?.xaxis ?? 0 < $1.displayRect?.xaxis ?? 0 })
+            Column.save(UUID().uuidString, key: $0.key, items: $0.value.filter { !filterOutCharacterSets.contains($0.title.safeUnwrapped) }.sorted { $0.displayRect?.xaxis ?? 0 < $1.displayRect?.xaxis ?? 0 })
         }.sorted { col1, col2 in
-            return col1.id < col2.id
+            return col1.key < col2.key
         }
-        
+
         let amountColumsn = columns.filter { column in
-            if let lastItem = column.items.last {
-                let amount = Float(lastItem.title)
+            if let lastItem = column.itemList.last {
+                let amount = Float(lastItem.title.safeUnwrapped)
                 return amount != nil
             }
             return false
         }
-                
+
         debugPrint("***************************")
         debugPrint(columns)
         debugPrint("***************************")

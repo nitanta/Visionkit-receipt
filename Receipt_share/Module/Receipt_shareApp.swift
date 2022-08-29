@@ -9,11 +9,17 @@ import SwiftUI
 
 @main
 struct Receipt_shareApp: App {
+    let persistenceController = PersistenceController.shared
+    init() {
+       debugPrint("DB path: \(Helpers.getFilePath)")
+    }
+    
     var body: some Scene {
         WindowGroup {
             NavigationView {
                 MainView()
             }
+            .environment(\.managedObjectContext, persistenceController.managedObjectContext)
         }
     }
 }
