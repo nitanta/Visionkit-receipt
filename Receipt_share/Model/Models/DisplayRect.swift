@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class DisplayRect: NSManagedObject, DatabaseManageable, Codable {
+class DisplayRect: NSManagedObject, DatabaseManageable {
     @nonobjc class func fetchRequest() -> NSFetchRequest<DisplayRect> {
         return NSFetchRequest<DisplayRect>(entityName: "DisplayRect")
     }
@@ -21,42 +21,16 @@ class DisplayRect: NSManagedObject, DatabaseManageable, Codable {
     
     @NSManaged var item: Item?
     
-    required convenience public init(from decoder: Decoder) throws {
-        let context = PersistenceController.shared.managedObjectContext
-        guard  let entity = NSEntityDescription.entity(forEntityName: "DisplayRect", in: context) else {
-            fatalError("Decode failure")
-        }
-        
-        self.init(entity: entity, insertInto: context)
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-                
-        id = try values.decodeIfPresent(String.self, forKey: .id)
-        width = try values.decodeIfPresent(Float.self, forKey: .width) ?? 0
-        height = try values.decodeIfPresent(Float.self, forKey: .height) ?? 0
-        xaxis = try values.decodeIfPresent(Float.self, forKey: .xaxis) ?? 0
-        yaxis = try values.decodeIfPresent(Float.self, forKey: .yaxis) ?? 0
+    public struct Object: Codable {
+        var id: String?
+        var width: Float
+        var height: Float
+        var xaxis: Float
+        var yaxis: Float
     }
-    
-    enum CodingKeys: String, CodingKey {
-        case id, width, height, xaxis, yaxis
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(width, forKey: .width)
-        try container.encode(height, forKey: .height)
-        try container.encode(xaxis, forKey: .xaxis)
-        try container.encode(yaxis, forKey: .yaxis)
-    }
-    
+
     static func save(_ id: String, width: Float, height: Float, xaxis: Float, yaxis: Float) -> DisplayRect {
-        let localItem: DisplayRect!
-        if let user = findFirst(predicate: NSPredicate(format: "id == %@", id), type: DisplayRect.self) {
-            localItem = user
-        } else {
-            localItem = DisplayRect(context: PersistenceController.shared.managedObjectContext)
-        }
+        let localItem = findOrCreate(predicate: NSPredicate(format: "id == %@", id), type: DisplayRect.self)
         
         localItem.id = id
         localItem.width = width
@@ -64,6 +38,21 @@ class DisplayRect: NSManagedObject, DatabaseManageable, Codable {
         localItem.xaxis = xaxis
         localItem.yaxis = yaxis
         return localItem
+    }
+    
+    static func save(_ rect: DisplayRect.Object) -> DisplayRect {
+        let localItem = findOrCreate(predicate: NSPredicate(format: "id == %@", rect.id.safeUnwrapped), type: DisplayRect.self)
+        
+        localItem.id = rect.id
+        localItem.width = rect.width
+        localItem.height = rect.height
+        localItem.xaxis = rect.xaxis
+        localItem.yaxis = rect.yaxis
+        return localItem
+    }
+    
+    func getObject() -> DisplayRect.Object {
+        DisplayRect.Object(id: id, width: width, height: height, xaxis: xaxis, yaxis: yaxis)
     }
 }
 

@@ -15,39 +15,42 @@ enum MessageType: String, Codable {
 }
 
 struct ChatMessage: Identifiable, Equatable, Codable {
+    static func == (lhs: ChatMessage, rhs: ChatMessage) -> Bool {
+        lhs.id == rhs.id
+    }
     
     var id = UUID()
     let type: MessageType
     
-    var receipt: ReceiptItem?
-    var receiptOwner: User?
+    var receipt: ReceiptItem.Object?
+    var receiptOwner: User.Object?
     
-    var roomInfo: Room?
+    var roomInfo: Room.Object?
     
-    var userInfo: User?
+    var userInfo: User.Object?
     
-    var columnSelect: Selection?
+    var columnSelect: Selection.Object?
     
     var date = Date()
     
     init(receipt: ReceiptItem, user: User) {
         type = .receipt
-        self.receipt = receipt
-        receiptOwner = user
+        self.receipt = receipt.getObject()
+        receiptOwner = user.getObject()
     }
     
     init(room: Room) {
         type = .roominfo
-        roomInfo = room
+        roomInfo = room.getObject()
     }
     
     init(user: User) {
         type = .userinfo
-        userInfo = user
+        userInfo = user.getObject()
     }
     
     init(selection: Selection) {
         type = .selection
-        columnSelect = selection
+        columnSelect = selection.getObject()
     }
 }

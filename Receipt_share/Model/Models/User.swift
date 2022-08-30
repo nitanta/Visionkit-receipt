@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import UIKit
 
-class User: NSManagedObject, DatabaseManageable, Codable {
+class User: NSManagedObject, DatabaseManageable {
     @nonobjc class func fetchRequest() -> NSFetchRequest<User> {
         return NSFetchRequest<User>(entityName: "User")
     }
@@ -21,43 +21,33 @@ class User: NSManagedObject, DatabaseManageable, Codable {
     @NSManaged var selection: NSSet?
     @NSManaged var room: NSSet?
     
-    required convenience public init(from decoder: Decoder) throws {
-        let context = PersistenceController.shared.managedObjectContext
-        guard  let entity = NSEntityDescription.entity(forEntityName: "User", in: context) else {
-            fatalError("Decode failure")
-        }
-        
-        self.init(entity: entity, insertInto: context)
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-                
-        id = try values.decodeIfPresent(String.self, forKey: .id)
-        deviceName = try values.decodeIfPresent(String.self, forKey: .deviceName)
-        nickName = try values.decodeIfPresent(String.self, forKey: .nickName)
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(deviceName, forKey: .deviceName)
-        try container.encode(nickName, forKey: .nickName)
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case id, deviceName, nickName
+    public struct Object: Codable {
+        let id: String?
+        let deviceName: String?
+        let nickName: String?
     }
     
     static func save(_ id: String, deviceName: String, nickName: String) -> User {
-        let localItem: User!
-        if let user = findFirst(predicate: NSPredicate(format: "id == %@", id), type: User.self) {
-            localItem = user
-        } else {
-            localItem = User(context: PersistenceController.shared.managedObjectContext)
-        }
+        let localItem = findOrCreate(predicate: NSPredicate(format: "id == %@", id), type: User.self)
         
         localItem.id = id
         localItem.deviceName = deviceName
         localItem.nickName = nickName
         return localItem
+    }
+    
+    static func save(_ user: User.Object) -> User {
+        let localItem = findOrCreate(predicate: NSPredicate(format: "id == %@", user.id.safeUnwrapped), type: User.self)
+        
+        localItem.id = user.id
+        localItem.deviceName = user.deviceName
+        localItem.nickName = user.nickName
+        return localItem
+    }
+    
+    
+    func getObject() -> User.Object {
+        User.Object(id: id, deviceName: deviceName, nickName: nickName)
     }
 }
 

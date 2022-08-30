@@ -15,9 +15,11 @@
 import Foundation
 import CoreData
 
-protocol DatabaseManageable: Decodable {
+protocol DatabaseManageable {
     static var database: PersistenceController { get }
     static func findFirst<T: NSManagedObject>(predicate: NSPredicate?, type: T.Type) throws -> T?
+    static func findOrCreate<T: NSManagedObject>(predicate: NSPredicate?, type: T.Type) -> T
+    static func remove<T: NSManagedObject>(predicate: NSPredicate?, type: T.Type)
 }
 
 extension DatabaseManageable {
@@ -47,6 +49,14 @@ extension DatabaseManageable {
             return (data as? [T]) ?? []
         } catch {
             return []
+        }
+    }
+    
+    static func findOrCreate<T: NSManagedObject>(predicate: NSPredicate?, type: T.Type) -> T {
+        if let item = try? Self.findFirst(predicate: predicate, type: T.self) {
+            return item
+        } else {
+            return T(context: database.managedObjectContext)
         }
     }
     

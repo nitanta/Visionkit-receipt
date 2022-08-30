@@ -10,7 +10,7 @@ import CoreData
 import UIKit
 import Vision
 
-class Item: NSManagedObject, DatabaseManageable, Codable {
+class Item: NSManagedObject, DatabaseManageable {
     @nonobjc class func fetchRequest() -> NSFetchRequest<Item> {
         return NSFetchRequest<Item>(entityName: "Item")
     }
@@ -21,51 +21,35 @@ class Item: NSManagedObject, DatabaseManageable, Codable {
     
     @NSManaged var column: Column?
     
-    required convenience public init(from decoder: Decoder) throws {
-        let context = PersistenceController.shared.managedObjectContext
-        guard  let entity = NSEntityDescription.entity(forEntityName: "Item", in: context) else {
-            fatalError("Decode failure")
-        }
-        
-        self.init(entity: entity, insertInto: context)
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        
-        id = try values.decodeIfPresent(String.self, forKey: .id)
-        title = try values.decodeIfPresent(String.self, forKey: .title)
-        displayRect = try values.decodeIfPresent(DisplayRect.self, forKey: .displayRect)
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case id, title, displayRect
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(title, forKey: .title)
-        try container.encode(displayRect, forKey: .displayRect)
+    public struct Object: Codable {
+        var id: String?
+        var title: String?
+        var displayRect: DisplayRect.Object?
     }
     
     static func save(_ id: String, title: String, observation: VNRecognizedText, image: UIImage) -> Item {
-        let localItem: Item!
-        if let user = findFirst(predicate: NSPredicate(format: "id == %@", id), type: Item.self) {
-            localItem = user
-        } else {
-            localItem = Item(context: PersistenceController.shared.managedObjectContext)
-        }
+        let localItem = findOrCreate(predicate: NSPredicate(format: "id == %@", id), type: Item.self)
+
         localItem.id = id
         localItem.title = title
         localItem.displayRect = createBoundingBoxOffSet(observation: observation, image: image)
         return localItem
     }
     
-    static func copy(_ id: String, title: String, rect: DisplayRect?) -> Item {
-        let localItem: Item!
-        if let user = findFirst(predicate: NSPredicate(format: "id == %@", id), type: Item.self) {
-            localItem = user
-        } else {
-            localItem = Item(context: PersistenceController.shared.managedObjectContext)
+    static func save(_ item: Item.Object) -> Item {
+        let localItem = findOrCreate(predicate: NSPredicate(format: "id == %@", item.id.safeUnwrapped), type: Item.self)
+        
+        localItem.id = item.id
+        localItem.title = item.title
+        if let rectObject = item.displayRect {
+            localItem.displayRect = DisplayRect.save(rectObject)
         }
+        return localItem
+    }
+    
+    static func copy(_ id: String, title: String, rect: DisplayRect?) -> Item {
+        let localItem = findOrCreate(predicate: NSPredicate(format: "id == %@", id), type: Item.self)
+
         localItem.id = id
         localItem.title = title
         localItem.displayRect = rect
@@ -91,6 +75,10 @@ class Item: NSManagedObject, DatabaseManageable, Codable {
         let rect = DisplayRect.save(UUID().uuidString, width: Float(width), height: Float(height), xaxis: Float(xaxis), yaxis: Float(yaxis))
         
         return rect
+    }
+    
+    func getObject() -> Item.Object {
+        Item.Object(id: id, title: title, displayRect: displayRect?.getObject())
     }
 }
 

@@ -9,54 +9,46 @@ import Foundation
 import CoreData
 import UIKit
 
-class Room: NSManagedObject, DatabaseManageable, Codable {
+class Room: NSManagedObject, DatabaseManageable {
     @nonobjc class func fetchRequest() -> NSFetchRequest<Room> {
         return NSFetchRequest<Room>(entityName: "Room")
     }
     
     @NSManaged var id: String?
-    
-    @NSManaged var participants: NSSet?
     @NSManaged var selection: NSSet?
     
-    required convenience public init(from decoder: Decoder) throws {
-        let context = PersistenceController.shared.managedObjectContext
-        guard  let entity = NSEntityDescription.entity(forEntityName: "Room", in: context) else {
-            fatalError("Decode failure")
+    @NSManaged var participants: NSSet?
+    
+    public struct Object: Codable {
+        let id: String?
+        let selection: [Selection.Object]?
+    }
+
+    func addSelections(_ columns: [Column], room: Room) {
+        columns.forEach { column in
+            _ = Selection.createRoom(column.id.safeUnwrapped, room: room, column: column)
         }
-        
-        self.init(entity: entity, insertInto: context)
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-                
-        id = try values.decodeIfPresent(String.self, forKey: .id)
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-    }
-    
-    func addSelections(_ columns: [Column]) {
-        let selections = columns.map { column -> Selection in
-            return Selection.createRoom(column.id.safeUnwrapped, column: column)
-        }
-        selection = NSSet(array: selections)
     }
     
     static func save(_ id: String) -> Room {
-        let localItem: Room!
-        if let user = findFirst(predicate: NSPredicate(format: "id == %@", id), type: Room.self) {
-            localItem = user
-        } else {
-            localItem = Room(context: PersistenceController.shared.managedObjectContext)
-        }
-        
+        let localItem = findOrCreate(predicate: NSPredicate(format: "id == %@", id), type: Room.self)
+
         localItem.id = id
         return localItem
+    }
+    
+    static func save(_ room: Room.Object) -> Room {
+        let localItem = findOrCreate(predicate: NSPredicate(format: "id == %@", room.id.safeUnwrapped), type: Room.self)
+        
+        localItem.id = room.id
+        if let selectionObject = room.selection {
+            localItem.selection = NSSet(array: selectionObject.map { Selection.save($0) })
+        }
+        return localItem
+    }
+    
+    func getObject() -> Room.Object {
+        Room.Object(id: id, selection: selectionList.map { $0.getObject()} )
     }
 }
 

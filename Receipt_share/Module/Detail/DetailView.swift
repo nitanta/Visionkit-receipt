@@ -107,11 +107,12 @@ struct DetailView: View {
     
     func setupRoomData() {
         let room = Room.save(receiptId.safeUnwrapped)
-        room.addSelections(datasource.map { $0 })
+        room.addSelections(datasource.map { $0 }, room: room)
         chatConnectionManager.host(receiptId.safeUnwrapped)
-        if let receipt = ReceiptItem.getRecepeit(using: receiptId.safeUnwrapped), let user = User.getMyUser() {
-            chatConnectionManager.sendReceiptInfo(receipt, user: user)
+        if /*let receipt = ReceiptItem.getRecepeit(using: receiptId.safeUnwrapped),*/ let user = User.getMyUser() {
+            //chatConnectionManager.sendReceiptInfo(receipt, user: user)
             chatConnectionManager.sendRoomInfo(room)
+            chatConnectionManager.sendUserInfo(user)
         }
         cacheManager.saveContext()
     }
