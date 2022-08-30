@@ -75,7 +75,7 @@ extension User {
     }
     
     var displayName: String {
-        return nickName ?? deviceName.safeUnwrapped
+        return nickName.safeUnwrapped.isEmpty ? deviceName.safeUnwrapped : nickName.safeUnwrapped
     }
     
     var roomList: [Room] {

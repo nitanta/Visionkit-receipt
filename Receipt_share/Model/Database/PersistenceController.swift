@@ -49,6 +49,9 @@ class PersistenceController {
             String(describing: Column.self),
             String(describing: DisplayRect.self),
             String(describing: Item.self),
+            String(describing: Selection.self),
+            String(describing: User.self),
+            String(describing: Room.self),
         ])
     }
     

@@ -66,11 +66,9 @@ struct SelectionView: View {
             HStack {
                 ForEach(chatConnectionManager.peers, id: \.self) { peer in
                     Text(peer.displayName)
-                        .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/, 6)
-                        .background(.green)
+                        .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/, 2)
                         .foregroundColor(.gray)
                         .font(Font.body.bold())
-                        .cornerRadius(9)
                 }
             }
         }

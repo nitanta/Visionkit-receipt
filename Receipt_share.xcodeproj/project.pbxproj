@@ -10,10 +10,6 @@
 		50127A3B28B51B69004E7844 /* ChatConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A3A28B51B69004E7844 /* ChatConnectionManager.swift */; };
 		50127A3E28B51B8E004E7844 /* BroadcastingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A3D28B51B8E004E7844 /* BroadcastingManager.swift */; };
 		50127A4128B51BFA004E7844 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A4028B51BFA004E7844 /* Formatter.swift */; };
-		50127A4928B51CD1004E7844 /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A4428B51CD1004E7844 /* ChatListView.swift */; };
-		50127A4A28B51CD1004E7844 /* MessageBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A4528B51CD1004E7844 /* MessageBodyView.swift */; };
-		50127A4C28B51CD1004E7844 /* TimestampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A4728B51CD1004E7844 /* TimestampView.swift */; };
-		50127A4D28B51CD1004E7844 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A4828B51CD1004E7844 /* ChatView.swift */; };
 		50127A5028B51D1C004E7844 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50127A4F28B51D1C004E7844 /* ButtonStyle.swift */; };
 		502851E628BD22F5007D5512 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502851E528BD22F5007D5512 /* StringExtension.swift */; };
 		5029283E28B10C7100D2C4C3 /* Receipt_share.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5029283C28B10C7100D2C4C3 /* Receipt_share.xcdatamodeld */; };
@@ -45,10 +41,6 @@
 		50127A3A28B51B69004E7844 /* ChatConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatConnectionManager.swift; sourceTree = "<group>"; };
 		50127A3D28B51B8E004E7844 /* BroadcastingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastingManager.swift; sourceTree = "<group>"; };
 		50127A4028B51BFA004E7844 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
-		50127A4428B51CD1004E7844 /* ChatListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListView.swift; sourceTree = "<group>"; };
-		50127A4528B51CD1004E7844 /* MessageBodyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBodyView.swift; sourceTree = "<group>"; };
-		50127A4728B51CD1004E7844 /* TimestampView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimestampView.swift; sourceTree = "<group>"; };
-		50127A4828B51CD1004E7844 /* ChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		50127A4F28B51D1C004E7844 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		502851E528BD22F5007D5512 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		5029283D28B10C7100D2C4C3 /* App_model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = App_model.xcdatamodel; sourceTree = "<group>"; };
@@ -110,10 +102,6 @@
 		50127A4328B51CD1004E7844 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				50127A4428B51CD1004E7844 /* ChatListView.swift */,
-				50127A4528B51CD1004E7844 /* MessageBodyView.swift */,
-				50127A4728B51CD1004E7844 /* TimestampView.swift */,
-				50127A4828B51CD1004E7844 /* ChatView.swift */,
 				5097E7BA28BE40D70017E849 /* SelectionView.swift */,
 			);
 			path = Chat;
@@ -317,8 +305,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50127A4D28B51CD1004E7844 /* ChatView.swift in Sources */,
-				50127A4928B51CD1004E7844 /* ChatListView.swift in Sources */,
 				5029283E28B10C7100D2C4C3 /* Receipt_share.xcdatamodeld in Sources */,
 				5097E7BD28BE41D30017E849 /* ColumnView.swift in Sources */,
 				5097E7B928BE1F210017E849 /* User.swift in Sources */,
@@ -344,9 +330,7 @@
 				5083AD3F28BD13F3007B8D77 /* Item.swift in Sources */,
 				5046609928A75A2A0035C728 /* ScannerController.swift in Sources */,
 				502851E628BD22F5007D5512 /* StringExtension.swift in Sources */,
-				50127A4A28B51CD1004E7844 /* MessageBodyView.swift in Sources */,
 				5083AD3D28BD13EA007B8D77 /* DisplayRect.swift in Sources */,
-				50127A4C28B51CD1004E7844 /* TimestampView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

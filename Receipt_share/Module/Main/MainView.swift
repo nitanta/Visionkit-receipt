@@ -86,6 +86,11 @@ struct MainView: View {
                     } label: {
                         Label(Constants.nickName, systemImage: "person.circle")
                     }
+                    
+                    Button(Constants.clear) {
+                        cacheManager.deleteData()
+                        cacheManager.saveContext()
+                    }
                 }
             }
             
@@ -152,6 +157,7 @@ extension MainView {
         static let save = "Save"
         static let cancel = "Cancel"
         static let nickName = "Nick name"
+        static let clear = "Clear"
     }
 }
 
