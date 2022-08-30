@@ -5,6 +5,7 @@
         <attribute name="key" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item" inverseName="column" inverseEntity="Item"/>
         <relationship name="receiptItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ReceiptItem" inverseName="item" inverseEntity="ReceiptItem"/>
+        <relationship name="selection" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Selection" inverseName="column" inverseEntity="Selection"/>
     </entity>
     <entity name="DisplayRect" representedClassName=".DisplayRect" syncable="YES">
         <attribute name="height" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -25,16 +26,31 @@
         <attribute name="scannedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="item" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Column" inverseName="receiptItem" inverseEntity="Column"/>
     </entity>
+    <entity name="Room" representedClassName=".Room" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <relationship name="participants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="room" inverseEntity="User"/>
+        <relationship name="selection" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Selection" inverseName="room" inverseEntity="Selection"/>
+    </entity>
+    <entity name="Selection" representedClassName=".Selection" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <relationship name="column" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Column" inverseName="selection" inverseEntity="Column"/>
+        <relationship name="room" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="selection" inverseEntity="Room"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="selection" inverseEntity="User"/>
+    </entity>
     <entity name="User" representedClassName=".User" syncable="YES">
         <attribute name="deviceName" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="nickName" optional="YES" attributeType="String"/>
+        <relationship name="room" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Room" inverseName="participants" inverseEntity="Room"/>
+        <relationship name="selection" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Selection" inverseName="user" inverseEntity="Selection"/>
     </entity>
     <elements>
-        <element name="Column" positionX="-54" positionY="-9" width="128" height="89"/>
+        <element name="Column" positionX="-54" positionY="-9" width="128" height="104"/>
         <element name="DisplayRect" positionX="-36" positionY="9" width="128" height="119"/>
         <element name="Item" positionX="-18" positionY="27" width="128" height="89"/>
         <element name="ReceiptItem" positionX="-63" positionY="-18" width="128" height="74"/>
-        <element name="User" positionX="-45" positionY="45" width="128" height="74"/>
+        <element name="User" positionX="-45" positionY="45" width="128" height="104"/>
+        <element name="Room" positionX="-36" positionY="54" width="128" height="74"/>
+        <element name="Selection" positionX="-27" positionY="63" width="128" height="89"/>
     </elements>
 </model>

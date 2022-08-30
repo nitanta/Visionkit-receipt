@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import UIKit
 
-class User: NSManagedObject, DatabaseManageable, Decodable {
+class User: NSManagedObject, DatabaseManageable, Codable {
     @nonobjc class func fetchRequest() -> NSFetchRequest<User> {
         return NSFetchRequest<User>(entityName: "User")
     }
@@ -17,6 +17,9 @@ class User: NSManagedObject, DatabaseManageable, Decodable {
     @NSManaged var id: String?
     @NSManaged var deviceName: String?
     @NSManaged var nickName: String?
+    
+    @NSManaged var selection: NSSet?
+    @NSManaged var room: NSSet?
     
     required convenience public init(from decoder: Decoder) throws {
         let context = PersistenceController.shared.managedObjectContext
@@ -30,6 +33,13 @@ class User: NSManagedObject, DatabaseManageable, Decodable {
         id = try values.decodeIfPresent(String.self, forKey: .id)
         deviceName = try values.decodeIfPresent(String.self, forKey: .deviceName)
         nickName = try values.decodeIfPresent(String.self, forKey: .nickName)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(deviceName, forKey: .deviceName)
+        try container.encode(nickName, forKey: .nickName)
     }
     
     enum CodingKeys: String, CodingKey {
@@ -56,12 +66,30 @@ extension User {
         UIDevice.current.identifierForVendor?.uuidString ?? ""
     }
     
-    static var deviceName: String {
+    static var pdeviceName: String {
         UIDevice.current.name
     }
     
     var isMe: Bool {
         return id == User.getDeviceId
+    }
+    
+    var displayName: String {
+        return nickName ?? deviceName.safeUnwrapped
+    }
+    
+    var roomList: [Room] {
+        if let rooms = room?.allObjects as? [Room] {
+            return rooms
+        }
+        return []
+    }
+    
+    var selectionList: [Selection] {
+        if let selections = selection?.allObjects as? [Selection] {
+            return selections
+        }
+        return []
     }
 }
 

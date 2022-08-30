@@ -10,7 +10,7 @@ import Combine
 
 
 struct DetailView: View {
-    @ObservedObject private var chatConnectionManager = ChatConnectionManager()
+    @EnvironmentObject var chatConnectionManager: ChatConnectionManager
 
     let cacheManager: PersistenceController
     @Binding var receiptId: String?
@@ -19,14 +19,14 @@ struct DetailView: View {
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(key: "key", ascending: true)]
     ) var datasource: FetchedResults<Column>
-        
-    var editedFields: [String: String] = [:]
-    
+            
     var body: some View {
         ZStack {
             
-            NavigationLink(destination: ChatView().environmentObject(chatConnectionManager), isActive: $chatConnectionManager.connectedToChat) {
-                EmptyView()
+            Group {
+                NavigationLink("", isActive: $chatConnectionManager.connectedToChat) {
+                    LazyView(SelectionView(cacheManager: cacheManager, roomId: $chatConnectionManager.roomId))
+                }
             }
             
             HStack {
@@ -35,7 +35,7 @@ struct DetailView: View {
                 //overlayView
                     .toolbar {
                         Button(Constants.start) {
-                            chatConnectionManager.host()
+                            chatConnectionManager.host(receiptId.safeUnwrapped)
                         }
                     }
                 
@@ -78,30 +78,7 @@ struct DetailView: View {
                     }
             }
             
-            
-            
             Spacer()
-        }
-    }
-    
-    struct ColumView: View {
-        let column: Column
-
-        var body: some View {
-            HStack(spacing: 16) {
-
-                ForEach(column.itemList, id: \.id) { item in
-                    Text(item.title.safeUnwrapped)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .foregroundColor(.primary)
-                        .font(.system(size: 14))
-                        //.frame(width: item.displayRect!.width, height: item.displayRect!.height)
-                        //.offset(x: item.displayRect!.xaxis, y: 0)
-                }
-
-            }
-            .padding(.horizontal)
-            .padding(.vertical, 8)
         }
     }
     

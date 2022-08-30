@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class Column: NSManagedObject, DatabaseManageable, Decodable {
+class Column: NSManagedObject, DatabaseManageable, Codable {
     @nonobjc class func fetchRequest() -> NSFetchRequest<Column> {
         return NSFetchRequest<Column>(entityName: "Column")
     }
@@ -18,6 +18,7 @@ class Column: NSManagedObject, DatabaseManageable, Decodable {
     @NSManaged var items: NSSet?
     
     @NSManaged var receiptItem: ReceiptItem?
+    @NSManaged var selection: Column?
     
     required convenience public init(from decoder: Decoder) throws {
         let context = PersistenceController.shared.managedObjectContext
@@ -36,6 +37,13 @@ class Column: NSManagedObject, DatabaseManageable, Decodable {
     
     enum CodingKeys: String, CodingKey {
         case id, key, items
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(key, forKey: .key)
+        try container.encode(items as! Set<Item>, forKey: .items)
     }
     
     static func save(_ id: String, key: Int, items: [Item]) -> Column {

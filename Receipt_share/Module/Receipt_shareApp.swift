@@ -10,6 +10,8 @@ import SwiftUI
 @main
 struct Receipt_shareApp: App {
     let persistenceController = PersistenceController.shared
+    @ObservedObject private var chatConnectionManager = ChatConnectionManager()
+
     init() {
        debugPrint("DB path: \(Helpers.getFilePath)")
     }
@@ -20,6 +22,7 @@ struct Receipt_shareApp: App {
                 MainView()
             }
             .environment(\.managedObjectContext, persistenceController.managedObjectContext)
+            .environmentObject(chatConnectionManager)
         }
     }
 }

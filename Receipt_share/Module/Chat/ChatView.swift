@@ -1,4 +1,4 @@
-
+/*
 import SwiftUI
 
 struct ChatView: View {
@@ -90,3 +90,4 @@ struct ChatView_Previews: PreviewProvider {
   }
 }
 #endif
+*/

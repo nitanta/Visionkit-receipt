@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class DisplayRect: NSManagedObject, DatabaseManageable, Decodable {
+class DisplayRect: NSManagedObject, DatabaseManageable, Codable {
     @nonobjc class func fetchRequest() -> NSFetchRequest<DisplayRect> {
         return NSFetchRequest<DisplayRect>(entityName: "DisplayRect")
     }
@@ -18,6 +18,8 @@ class DisplayRect: NSManagedObject, DatabaseManageable, Decodable {
     @NSManaged var height: Float
     @NSManaged var xaxis: Float
     @NSManaged var yaxis: Float
+    
+    @NSManaged var item: Item?
     
     required convenience public init(from decoder: Decoder) throws {
         let context = PersistenceController.shared.managedObjectContext
@@ -37,6 +39,15 @@ class DisplayRect: NSManagedObject, DatabaseManageable, Decodable {
     
     enum CodingKeys: String, CodingKey {
         case id, width, height, xaxis, yaxis
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(width, forKey: .width)
+        try container.encode(height, forKey: .height)
+        try container.encode(xaxis, forKey: .xaxis)
+        try container.encode(yaxis, forKey: .yaxis)
     }
     
     static func save(_ id: String, width: Float, height: Float, xaxis: Float, yaxis: Float) -> DisplayRect {

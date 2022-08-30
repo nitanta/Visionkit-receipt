@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class ReceiptItem: NSManagedObject, DatabaseManageable, Decodable {
+class ReceiptItem: NSManagedObject, DatabaseManageable, Codable {
     @nonobjc class func fetchRequest() -> NSFetchRequest<ReceiptItem> {
         return NSFetchRequest<ReceiptItem>(entityName: "ReceiptItem")
     }
@@ -31,6 +31,13 @@ class ReceiptItem: NSManagedObject, DatabaseManageable, Decodable {
         if let items = try values.decodeIfPresent([Column].self, forKey: .item) {
             self.item = NSSet(array: items)
         }
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(scannedDate, forKey: .scannedDate)
+        try container.encode(item as! Set<Column>, forKey: .item)
     }
     
     enum CodingKeys: String, CodingKey {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainView: View {
-    @ObservedObject private var chatConnectionManager = ChatConnectionManager()
+    @EnvironmentObject var chatConnectionManager: ChatConnectionManager
     
     @State var showLoader: Bool = false
     
@@ -30,7 +30,7 @@ struct MainView: View {
     
     init() {
         if !userInit {
-            user = User.save(User.getDeviceId, deviceName: User.deviceName, nickName: "")
+            user = User.save(User.getDeviceId, deviceName: User.pdeviceName, nickName: "")
             cacheManager.saveContext()
             userInit.toggle()
         } else {
@@ -46,8 +46,8 @@ struct MainView: View {
                     LazyView(DetailView(cacheManager: cacheManager, receiptId: $detailItem))
                 }
                 
-                NavigationLink(destination: ChatView().environmentObject(chatConnectionManager), isActive: $chatConnectionManager.connectedToChat) {
-                    EmptyView()
+                NavigationLink("", isActive: $chatConnectionManager.connectedToChat) {
+                    LazyView(SelectionView(cacheManager: cacheManager, roomId: $chatConnectionManager.roomId))
                 }
             }
             

@@ -10,7 +10,7 @@ import CoreData
 import UIKit
 import Vision
 
-class Item: NSManagedObject, DatabaseManageable, Decodable {
+class Item: NSManagedObject, DatabaseManageable, Codable {
     @nonobjc class func fetchRequest() -> NSFetchRequest<Item> {
         return NSFetchRequest<Item>(entityName: "Item")
     }
@@ -37,6 +37,13 @@ class Item: NSManagedObject, DatabaseManageable, Decodable {
     
     enum CodingKeys: String, CodingKey {
         case id, title, displayRect
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(title, forKey: .title)
+        try container.encode(displayRect, forKey: .displayRect)
     }
     
     static func save(_ id: String, title: String, observation: VNRecognizedText, image: UIImage) -> Item {
