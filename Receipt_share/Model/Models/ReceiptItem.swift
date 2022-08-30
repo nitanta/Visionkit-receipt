@@ -38,8 +38,12 @@ class ReceiptItem: NSManagedObject, DatabaseManageable, Decodable {
     }
     
     static func save(_ id: String, scannedDate: Date, item: [Column]) -> ReceiptItem {
-        
-        let localItem = ReceiptItem(context: PersistenceController.shared.managedObjectContext)
+        let localItem: ReceiptItem!
+        if let user = findFirst(predicate: NSPredicate(format: "id == %@", id), type: ReceiptItem.self) {
+            localItem = user
+        } else {
+            localItem = ReceiptItem(context: PersistenceController.shared.managedObjectContext)
+        }
         
         localItem.id = id
         localItem.scannedDate = scannedDate

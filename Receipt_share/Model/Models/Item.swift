@@ -40,9 +40,12 @@ class Item: NSManagedObject, DatabaseManageable, Decodable {
     }
     
     static func save(_ id: String, title: String, observation: VNRecognizedText, image: UIImage) -> Item {
-        
-        let localItem = Item(context: PersistenceController.shared.managedObjectContext)
-        
+        let localItem: Item!
+        if let user = findFirst(predicate: NSPredicate(format: "id == %@", id), type: Item.self) {
+            localItem = user
+        } else {
+            localItem = Item(context: PersistenceController.shared.managedObjectContext)
+        }
         localItem.id = id
         localItem.title = title
         localItem.displayRect = createBoundingBoxOffSet(observation: observation, image: image)
@@ -50,8 +53,12 @@ class Item: NSManagedObject, DatabaseManageable, Decodable {
     }
     
     static func copy(_ id: String, title: String, rect: DisplayRect?) -> Item {
-        let localItem = Item(context: PersistenceController.shared.managedObjectContext)
-        
+        let localItem: Item!
+        if let user = findFirst(predicate: NSPredicate(format: "id == %@", id), type: Item.self) {
+            localItem = user
+        } else {
+            localItem = Item(context: PersistenceController.shared.managedObjectContext)
+        }
         localItem.id = id
         localItem.title = title
         localItem.displayRect = rect

@@ -40,8 +40,12 @@ class DisplayRect: NSManagedObject, DatabaseManageable, Decodable {
     }
     
     static func save(_ id: String, width: Float, height: Float, xaxis: Float, yaxis: Float) -> DisplayRect {
-        
-        let localItem = DisplayRect(context: PersistenceController.shared.managedObjectContext)
+        let localItem: DisplayRect!
+        if let user = findFirst(predicate: NSPredicate(format: "id == %@", id), type: DisplayRect.self) {
+            localItem = user
+        } else {
+            localItem = DisplayRect(context: PersistenceController.shared.managedObjectContext)
+        }
         
         localItem.id = id
         localItem.width = width

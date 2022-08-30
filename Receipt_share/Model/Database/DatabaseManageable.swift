@@ -29,6 +29,8 @@ extension DatabaseManageable {
         let request = T.fetchRequest()
         request.fetchLimit = 1
         request.predicate = predicate
+        request.entity = NSEntityDescription.entity(forEntityName: String(describing: T.self), in: database.managedObjectContext)
+
         do {
             guard let data = try database.managedObjectContext.fetch(request).first else { return nil }
             return data as? T

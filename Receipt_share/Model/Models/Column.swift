@@ -39,8 +39,12 @@ class Column: NSManagedObject, DatabaseManageable, Decodable {
     }
     
     static func save(_ id: String, key: Int, items: [Item]) -> Column {
-        
-        let localItem = Column(context: PersistenceController.shared.managedObjectContext)
+        let localItem: Column!
+        if let user = findFirst(predicate: NSPredicate(format: "id == %@", id), type: Column.self) {
+            localItem = user
+        } else {
+            localItem = Column(context: PersistenceController.shared.managedObjectContext)
+        }
         
         localItem.id = id
         localItem.key = Int64(key)
