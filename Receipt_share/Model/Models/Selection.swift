@@ -45,7 +45,7 @@ class Selection: NSManagedObject, DatabaseManageable, Codable {
         case id, column, user
     }
     
-    static func save(_ id: String, column: Column, user: User) -> Selection {
+    static func createRoom(_ id: String, column: Column) -> Selection {
         let localItem: Selection!
         if let user = findFirst(predicate: NSPredicate(format: "id == %@", id), type: Selection.self) {
             localItem = user
@@ -55,8 +55,11 @@ class Selection: NSManagedObject, DatabaseManageable, Codable {
         
         localItem.id = id
         localItem.column = column
-        localItem.user = user
         return localItem
+    }
+    
+    func saveUser(_ user: User) {
+        self.user = user
     }
 }
 

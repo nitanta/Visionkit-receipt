@@ -35,7 +35,7 @@ struct DetailView: View {
                 //overlayView
                     .toolbar {
                         Button(Constants.start) {
-                            chatConnectionManager.host(receiptId.safeUnwrapped)
+                            setupRoomData()
                         }
                     }
                 
@@ -102,6 +102,17 @@ struct DetailView: View {
     
     func delete(_ column: Column) {
         cacheManager.managedObjectContext.delete(column)
+        cacheManager.saveContext()
+    }
+    
+    func setupRoomData() {
+        let room = Room.save(receiptId.safeUnwrapped)
+        room.addSelections(datasource.map { $0 })
+        chatConnectionManager.host(receiptId.safeUnwrapped)
+        if let receipt = ReceiptItem.getRecepeit(using: receiptId.safeUnwrapped), let user = User.getMyUser() {
+            chatConnectionManager.sendReceiptInfo(receipt, user: user)
+            chatConnectionManager.sendRoomInfo(room)
+        }
         cacheManager.saveContext()
     }
 }

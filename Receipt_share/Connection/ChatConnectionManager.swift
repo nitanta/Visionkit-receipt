@@ -212,8 +212,7 @@ class ChatConnectionManager: NSObject, ObservableObject {
     
     private func send(_ message: ChatMessage) {
         messages.append(message)
-        guard let session = session, let data = try? Container.jsonEncoder.encode(message), !session.connectedPeers.isEmpty
-        else { return }
+        guard let session = session, let data = try? Container.jsonEncoder.encode(message), !session.connectedPeers.isEmpty else { return }
         
         do {
             try session.send(data, toPeers: session.connectedPeers, with: .reliable)
@@ -277,13 +276,18 @@ extension ChatConnectionManager {
         send(message)
     }
     
+    func sendRoomInfo(_ room: Room) {
+        let message = ChatMessage(room: room)
+        send(message)
+    }
+    
     func sendUserInfo(_ user: User) {
         let message = ChatMessage(user: user)
         send(message)
     }
     
-    func sendSelection(_ column: Column, user: User) {
-        let message = ChatMessage(column: column, user: user)
+    func sendSelection(_ column: Selection) {
+        let message = ChatMessage(selection: column)
         send(message)
     }
 }
@@ -344,14 +348,16 @@ extension ChatConnectionManager: MCSessionDelegate {
         }
     }
     
-    func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {}
+    func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
+        
+    }
     
     func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
         print("Receiving chat history")
     }
     
     func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
-        guard let localURL = localURL, let data = try? Data(contentsOf: localURL), let messages = try? JSONDecoder().decode([ChatMessage].self, from: data) else { return }
+        guard let localURL = localURL, let data = try? Data(contentsOf: localURL), let messages = try? Container.jsonDecoder.decode([ChatMessage].self, from: data) else { return }
         
         DispatchQueue.main.async {
             self.messages.insert(contentsOf: messages, at: 0)
@@ -362,8 +368,12 @@ extension ChatConnectionManager: MCSessionDelegate {
 
 extension ChatConnectionManager: MCBrowserViewControllerDelegate {
     func browserViewControllerDidFinish(_ browserViewController: MCBrowserViewController) {
-        browserViewController.dismiss(animated: true) {
+        browserViewController.dismiss(animated: true) { [weak self] in
+            guard let self = self else { return }
             self.connectedToChat = true
+            if let user = User.getMyUser() {
+                self.sendUserInfo(user)
+            }
         }
     }
     

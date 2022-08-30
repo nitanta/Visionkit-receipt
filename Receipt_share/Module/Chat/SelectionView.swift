@@ -83,7 +83,7 @@ struct SelectionView: View {
             List(datasource, id: \.id) { item in
                 OverlayColumnCell(selection: item)
                     .onTapGesture {
-                        
+                        selectColumn(selection: item)
                     }
             }
             
@@ -101,7 +101,7 @@ struct SelectionView: View {
 
                 if let user = selection.user {
                     HStack {
-                        Text("Selected by: \(user.nickName.safeUnwrapped)")
+                        Text("Selected by: \(user.displayName)")
                             .italic()
                             .font(.caption2)
                             .foregroundColor(.black)
@@ -109,6 +109,14 @@ struct SelectionView: View {
                     .background(.gray.opacity(0.15))
                 }
             }
+        }
+    }
+    
+    func selectColumn(selection: Selection) {
+        if let user = User.getMyUser() {
+            selection.saveUser(user)
+            cacheManager.saveContext()
+            chatConnectionManager.sendSelection(selection)
         }
     }
 }

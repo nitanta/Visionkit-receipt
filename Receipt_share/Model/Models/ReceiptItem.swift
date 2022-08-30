@@ -66,4 +66,9 @@ extension ReceiptItem {
         }
         return []
     }
+    
+    static func getRecepeit(using id: String) -> ReceiptItem? {
+        let receipt = findFirst(predicate: NSPredicate(format: "id == %@", id), type: ReceiptItem.self)
+        return receipt
+    }
 }

@@ -9,6 +9,7 @@ import UIKit
 
 enum MessageType: String, Codable {
     case receipt
+    case roominfo
     case userinfo
     case selection
 }
@@ -21,10 +22,13 @@ struct ChatMessage: Identifiable, Equatable, Codable {
     var receipt: ReceiptItem?
     var receiptOwner: User?
     
+    var roomInfo: Room?
+    
     var userInfo: User?
     
-    var columnSelect: Column?
-    var columnSelectUser: User?
+    var columnSelect: Selection?
+    
+    var date = Date()
     
     init(receipt: ReceiptItem, user: User) {
         type = .receipt
@@ -32,14 +36,18 @@ struct ChatMessage: Identifiable, Equatable, Codable {
         receiptOwner = user
     }
     
+    init(room: Room) {
+        type = .roominfo
+        roomInfo = room
+    }
+    
     init(user: User) {
         type = .userinfo
         userInfo = user
     }
     
-    init(column: Column, user: User) {
+    init(selection: Selection) {
         type = .selection
-        columnSelect = column
-        columnSelectUser = user
+        columnSelect = selection
     }
 }

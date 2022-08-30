@@ -91,5 +91,10 @@ extension User {
         }
         return []
     }
+    
+    static func getMyUser() -> User? {
+        let user = findFirst(predicate: NSPredicate(format: "id == %@", Self.getDeviceId), type: User.self)
+        return user
+    }
 }
 

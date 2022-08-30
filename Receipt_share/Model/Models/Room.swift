@@ -40,6 +40,13 @@ class Room: NSManagedObject, DatabaseManageable, Codable {
         case id
     }
     
+    func addSelections(_ columns: [Column]) {
+        let selections = columns.map { column -> Selection in
+            return Selection.createRoom(column.id.safeUnwrapped, column: column)
+        }
+        selection = NSSet(array: selections)
+    }
+    
     static func save(_ id: String) -> Room {
         let localItem: Room!
         if let user = findFirst(predicate: NSPredicate(format: "id == %@", id), type: Room.self) {
