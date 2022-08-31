@@ -16,7 +16,7 @@ struct SelectionView: View {
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(key: "column.key", ascending: true)]
     ) var datasource: FetchedResults<Selection>
-    
+        
     var body: some View {
         VStack {
             chatInfoView
@@ -84,6 +84,8 @@ struct SelectionView: View {
                         selectColumn(selection: item)
                     }
             }
+            .id(chatConnectionManager.refreshID)
+
             
             Spacer()
         }
@@ -115,6 +117,8 @@ struct SelectionView: View {
             selection.saveUser(user)
             cacheManager.saveContext()
             chatConnectionManager.sendSelection(selection)
+            
+            chatConnectionManager.refresh()
         }
     }
 }

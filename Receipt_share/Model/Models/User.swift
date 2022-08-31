@@ -62,7 +62,7 @@ extension User {
         UIDevice.current.identifierForVendor?.uuidString ?? ""
     }
     
-    static var pdeviceName: String {
+    static var phoneName: String {
         UIDevice.current.name
     }
     
@@ -83,7 +83,10 @@ extension User {
     
     static func getMyUser() -> User? {
         let user = findFirst(predicate: NSPredicate(format: "id == %@", Self.getDeviceId), type: User.self)
-        return user
+        if let user = user {
+            return user
+        }
+        return save(getDeviceId, deviceName: phoneName, nickName: "")
     }
     
     static func getParticipantId(_ userId: String, roomId: String) -> String {

@@ -16,6 +16,8 @@ class ChatConnectionManager: NSObject, ObservableObject {
     @Published var connectedToChat = false
     @Published var roomId: String? = nil
     
+    @Published private(set) var refreshID = UUID()
+    
     let myPeerId = MCPeerID(displayName: UIDevice.current.name)
     private var advertiserAssistant: MCNearbyServiceAdvertiser?
     private var session: MCSession?
@@ -205,6 +207,10 @@ extension ChatConnectionManager {
         let message = ChatMessage(selection: column)
         send(message)
     }
+    
+    func refresh() {
+        refreshID = UUID()
+    }
 }
 
 extension ChatConnectionManager {
@@ -231,6 +237,8 @@ extension ChatConnectionManager {
     func saveMessage(_ message: ChatMessage) {
         parseMessage(message)
         cacheManager.saveContext()
+        
+        refresh()
     }
     
     func saveMessages(_ messages: [ChatMessage]) {
@@ -238,5 +246,7 @@ extension ChatConnectionManager {
             parseMessage(message)
         }
         cacheManager.saveContext()
+        
+        refresh()
     }
 }

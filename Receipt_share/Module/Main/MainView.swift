@@ -16,6 +16,8 @@ struct MainView: View {
         sortDescriptors: [NSSortDescriptor(key: "scannedDate", ascending: true)]
     ) var datasource: FetchedResults<ReceiptItem>
     
+    @State private var refreshID = UUID()
+    
     var cacheManager: PersistenceController = .shared
     var docManager: DocumentManager = DocumentManager()
     
@@ -23,19 +25,12 @@ struct MainView: View {
     
     @State var detailItem: String? = nil
     @State var showDetail: Bool = false
+            
+    init() {}
     
-    @AppStorage("user_init") var userInit: Bool = false
-    
-    var user: User!
-    
-    init() {
-        if !userInit {
-            user = User.save(User.getDeviceId, deviceName: User.pdeviceName, nickName: "")
-            cacheManager.saveContext()
-            userInit.toggle()
-        } else {
-            user = User.findFirst(predicate: NSPredicate(format: "id == %@", User.getDeviceId), type: User.self)
-        }
+    func createMyUser() {
+        _ = User.save(User.getDeviceId, deviceName: User.phoneName, nickName: "")
+        cacheManager.saveContext()
     }
     
     var body: some View {
@@ -53,15 +48,15 @@ struct MainView: View {
             
             VStack {
                 
-                ScrollView {
-                    ForEach(datasource, id: \.id) { item in
-                        ListCell(item: item)
-                            .onTapGesture {
-                                detailItem = item.id.safeUnwrapped
-                                showDetail = true
-                            }
-                    }
+                List(datasource, id: \.id) { item in
+                    ListCell(item: item)
+                        .onTapGesture {
+                            detailItem = item.id.safeUnwrapped
+                            showDetail = true
+                        }
                 }
+                .id(refreshID)
+                
                 
             }
             .toolbar {
@@ -88,9 +83,7 @@ struct MainView: View {
                     }
                     
                     Button(Constants.clear) {
-                        userInit = false
-                        cacheManager.deleteData()
-                        cacheManager.saveContext()
+                        clearData()
                     }
                 }
             }
@@ -124,7 +117,9 @@ struct MainView: View {
         let alert = UIAlertController(title: Constants.change, message: "", preferredStyle: .alert)
         alert.addTextField { field in
             field.placeholder = Constants.nickName
-            field.text = user.nickName.safeUnwrapped
+            if let user = User.getMyUser() {
+                field.text = user.nickName.safeUnwrapped
+            }
         }
         
         alert.addAction(UIAlertAction(title: Constants.cancel, style: .cancel, handler: { _ in
@@ -133,7 +128,8 @@ struct MainView: View {
         
         alert.addAction(UIAlertAction(title: Constants.save, style: .default, handler: { _ in
             if let field = alert.textFields?.first {
-                user?.nickName = field.text.safeUnwrapped
+                guard let user = User.getMyUser() else { return }
+                user.nickName = field.text.safeUnwrapped
                 cacheManager.saveContext()
             }
         }))
@@ -147,6 +143,13 @@ struct MainView: View {
         return root
     }
     
+    func clearData() {
+        cacheManager.deleteData()
+        cacheManager.saveContext()
+                
+        createMyUser()
+        refreshID = UUID()
+    }
 }
 
 extension MainView {

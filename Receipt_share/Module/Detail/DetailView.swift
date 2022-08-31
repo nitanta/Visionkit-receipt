@@ -15,6 +15,8 @@ struct DetailView: View {
     let cacheManager: PersistenceController
     @Binding var receiptId: String?
     var docManager: DocumentManager = DocumentManager()
+    
+    @State private var refreshID = UUID()
         
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(key: "key", ascending: true)]
@@ -77,6 +79,7 @@ struct DetailView: View {
 
                     }
             }
+            .id(refreshID)
             
             Spacer()
         }
@@ -153,6 +156,7 @@ extension DetailView {
                 fields.forEach { field in
                     guard let editItems = editableItems[safe: field.tag] else { return }
                     editItems.title = field.text ?? field.placeholder ?? ""
+                    refreshID = UUID()
                 }
                 primaryAction()
             }
