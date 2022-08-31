@@ -78,7 +78,8 @@ class Item: NSManagedObject, DatabaseManageable {
     }
     
     func getObject() -> Item.Object {
-        Item.Object(id: id, title: title, displayRect: displayRect?.getObject())
+        //Item.Object(id: id, title: title, displayRect: displayRect?.getObject())
+        Item.Object(id: id, title: title, displayRect: nil)
     }
 }
 

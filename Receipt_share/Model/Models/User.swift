@@ -19,7 +19,7 @@ class User: NSManagedObject, DatabaseManageable {
     @NSManaged var nickName: String?
     
     @NSManaged var selection: NSSet?
-    @NSManaged var room: NSSet?
+    @NSManaged var room: Room?
     
     public struct Object: Codable {
         let id: String?
@@ -36,12 +36,18 @@ class User: NSManagedObject, DatabaseManageable {
         return localItem
     }
     
-    static func save(_ user: User.Object) -> User {
-        let localItem = findOrCreate(predicate: NSPredicate(format: "id == %@", user.id.safeUnwrapped), type: User.self)
+    static func saveRoomUser(_ user: User.Object, roomId: String) -> User {
+        let newId = getParticipantId(user.id.safeUnwrapped, roomId: roomId)
+        let localItem = findOrCreate(predicate: NSPredicate(format: "id == %@", newId), type: User.self)
         
-        localItem.id = user.id
+        localItem.id = newId
         localItem.deviceName = user.deviceName
         localItem.nickName = user.nickName
+        
+        if let room = Room.findFirst(predicate: NSPredicate(format: "id == %@", roomId), type: Room.self) {
+            localItem.room = room
+        }
+        
         return localItem
     }
     
@@ -68,13 +74,6 @@ extension User {
         return nickName.safeUnwrapped.isEmpty ? deviceName.safeUnwrapped : nickName.safeUnwrapped
     }
     
-    var roomList: [Room] {
-        if let rooms = room?.allObjects as? [Room] {
-            return rooms
-        }
-        return []
-    }
-    
     var selectionList: [Selection] {
         if let selections = selection?.allObjects as? [Selection] {
             return selections
@@ -85,6 +84,24 @@ extension User {
     static func getMyUser() -> User? {
         let user = findFirst(predicate: NSPredicate(format: "id == %@", Self.getDeviceId), type: User.self)
         return user
+    }
+    
+    static func getParticipantId(_ userId: String, roomId: String) -> String {
+        return "\(userId)@\(roomId)"
+    }
+    
+    var getUserId: String {
+        if let split = id.safeUnwrapped.split(separator: "@").first {
+            return String(split)
+        }
+        return id.safeUnwrapped
+    }
+    
+    var getRoomId: String {
+        if let split = id.safeUnwrapped.split(separator: "@").last {
+            return String(split)
+        }
+        return id.safeUnwrapped
     }
 }
 

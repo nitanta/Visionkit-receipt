@@ -31,7 +31,10 @@ class Column: NSManagedObject, DatabaseManageable {
         
         localItem.id = id
         localItem.key = Int64(key)
-        localItem.items = NSSet(array: items)
+        items.forEach { item in
+            item.column = localItem
+        }
+        
         return localItem
     }
     
@@ -41,7 +44,10 @@ class Column: NSManagedObject, DatabaseManageable {
         localItem.id = column.id
         localItem.key = column.key
         if let itemsObject = column.items {
-            localItem.items = NSSet(array: itemsObject.map { Item.save($0) })
+            itemsObject.forEach { itemObj in
+                let item = Item.save(itemObj)
+                item.column = localItem
+            }
         }
         return localItem
     }

@@ -88,6 +88,7 @@ struct MainView: View {
                     }
                     
                     Button(Constants.clear) {
+                        userInit = false
                         cacheManager.deleteData()
                         cacheManager.saveContext()
                     }

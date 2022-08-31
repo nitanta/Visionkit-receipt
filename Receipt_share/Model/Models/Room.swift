@@ -42,7 +42,10 @@ class Room: NSManagedObject, DatabaseManageable {
         
         localItem.id = room.id
         if let selectionObject = room.selection {
-            localItem.selection = NSSet(array: selectionObject.map { Selection.save($0) })
+            selectionObject.forEach { selection in
+                let selection = Selection.save(selection, roomId: room.id.safeUnwrapped)
+                selection.room = localItem
+            }
         }
         return localItem
     }

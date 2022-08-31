@@ -35,7 +35,7 @@ class Selection: NSManagedObject, DatabaseManageable {
         return localItem
     }
     
-    static func save(_ selection: Selection.Object) -> Selection {
+    static func save(_ selection: Selection.Object, roomId: String) -> Selection {
         let localItem = findOrCreate(predicate: NSPredicate(format: "id == %@", selection.id.safeUnwrapped), type: Selection.self)
         
         localItem.id = selection.id
@@ -43,7 +43,7 @@ class Selection: NSManagedObject, DatabaseManageable {
             localItem.column = Column.save(columnObject)
         }
         if let userObject = selection.user {
-            localItem.user = User.save(userObject)
+            localItem.user = User.saveRoomUser(userObject, roomId: roomId)
         }
         return localItem
     }
