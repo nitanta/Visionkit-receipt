@@ -33,16 +33,38 @@ struct MainView: View {
         cacheManager.saveContext()
     }
     
+    private func makeDetailViewFetchRequest(receiptId: String) -> FetchRequest<Column> {
+        let predicate: NSPredicate? = Column.columnPredicate(using: receiptId)
+        return FetchRequest<Column>(
+            entity: Column.entity(),
+            sortDescriptors: [
+                NSSortDescriptor(key: "key", ascending: true)
+            ],
+            predicate: predicate
+        )
+    }
+    
+    private func makeSelectionViewFetchRequest(roomId: String) -> FetchRequest<Selection> {
+        let predicate: NSPredicate? = Selection.roomPredicate(using: roomId)
+        return FetchRequest<Selection>(
+            entity: Selection.entity(),
+            sortDescriptors: [
+                NSSortDescriptor(key: "column.key", ascending: true)
+            ],
+            predicate: predicate
+        )
+    }
+    
     var body: some View {
         ZStack {
             
             Group {
                 NavigationLink("", isActive: $showDetail) {
-                    LazyView(DetailView(cacheManager: cacheManager, receiptId: $detailItem))
+                    LazyView(DetailView(cacheManager: cacheManager, receiptId: $detailItem, fetchRequest: makeDetailViewFetchRequest(receiptId: detailItem.safeUnwrapped)))
                 }
                 
                 NavigationLink("", isActive: $chatConnectionManager.connectedToChat) {
-                    LazyView(SelectionView(cacheManager: cacheManager, roomId: $chatConnectionManager.roomId))
+                    LazyView(SelectionView(cacheManager: cacheManager, roomId: $chatConnectionManager.roomId, fetchRequest: makeSelectionViewFetchRequest(roomId: chatConnectionManager.roomId.safeUnwrapped)))
                 }
             }
             

@@ -69,7 +69,7 @@ struct ScannerController: UIViewControllerRepresentable {
                         DispatchQueue.main.async {
                             if let referenceImage = self.referenceImage {
                                 let result = self.parser.generateDatasource(recognizedText: requestResults, image: referenceImage)
-                                let receipt = ReceiptItem.save(UUID().uuidString, scannedDate: Date(), item: result)
+                                let receipt = ReceiptItem.save(UUID().uuidString, scannedDate: Date(), item: result.map { Column.save($0) })
                                 self.docManager.saveImage(image: referenceImage, id: receipt.id.safeUnwrapped)
                                 self.cacheManager.saveContext()
                             }
@@ -117,7 +117,7 @@ struct ScannerController: UIViewControllerRepresentable {
 }
 
 protocol ScannedDataParseable {
-    func generateDatasource(recognizedText: [VNRecognizedTextObservation], image: UIImage) -> [Column]
+    func generateDatasource(recognizedText: [VNRecognizedTextObservation], image: UIImage) -> [Column.Object]
 }
 
 class OtherParser: ScannedDataParseable {
@@ -125,27 +125,35 @@ class OtherParser: ScannedDataParseable {
     
     var filterOutCharacterSets: [String]  = [":", "..", "#", "*", "-", "_"]
     
-    func generateDatasource(recognizedText: [VNRecognizedTextObservation], image: UIImage) -> [Column] {
+    func generateDatasource(recognizedText: [VNRecognizedTextObservation], image: UIImage) -> [Column.Object] {
         let maximumCandidates = 1
 
-        let items = recognizedText.compactMap { observation -> Item? in
+        let items = recognizedText.compactMap { observation -> Item.Object? in
             guard let candidate = observation.topCandidates(maximumCandidates).first else { return nil }
 
-            return Item.save(UUID().uuidString, title: candidate.string, observation: candidate, image: image)
+            return Item.Object(UUID().uuidString, title: candidate.string, observation: candidate, image: image)
         }
+        
 
         let grouped = Dictionary(grouping: items) { (device) -> Int in
             return Int((device.displayRect?.yaxis ?? 0) / 20)
         }
 
         let columns = grouped.map {
-            Column.save(UUID().uuidString, key: $0.key, items: $0.value.filter { !filterOutCharacterSets.contains($0.title.safeUnwrapped) }.sorted { $0.displayRect?.xaxis ?? 0 < $1.displayRect?.xaxis ?? 0 })
+            Column.Object(
+                id: UUID().uuidString,
+                key: Int64($0.key),
+                items: $0.value.filter {
+                    !filterOutCharacterSets.contains($0.title.safeUnwrapped)
+                }.sorted { $0.displayRect?.xaxis ?? 0 < $1.displayRect?.xaxis ?? 0 }
+            )
         }.sorted { col1, col2 in
             return col1.key < col2.key
         }
-
+        
+        
         let amountColumsn = columns.filter { column in
-            if let lastItem = column.itemList.last {
+            if let lastItem = column.items?.last {
                 let amount = Float(lastItem.title.safeUnwrapped)
                 return amount != nil
             }

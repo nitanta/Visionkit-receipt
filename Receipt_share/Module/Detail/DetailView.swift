@@ -17,17 +17,29 @@ struct DetailView: View {
     var docManager: DocumentManager = DocumentManager()
     
     @State private var refreshID = UUID()
-        
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(key: "key", ascending: true)]
-    ) var datasource: FetchedResults<Column>
+    
+    var fetchRequest: FetchRequest<Column>
+    private var datasource: FetchedResults<Column> {
+        fetchRequest.wrappedValue
+    }
+    
+    private func makeSelectionViewFetchRequest(roomId: String) -> FetchRequest<Selection> {
+        let predicate: NSPredicate? = Selection.roomPredicate(using: roomId)
+        return FetchRequest<Selection>(
+            entity: Selection.entity(),
+            sortDescriptors: [
+                NSSortDescriptor(key: "column.key", ascending: true)
+            ],
+            predicate: predicate
+        )
+    }
             
     var body: some View {
         ZStack {
             
             Group {
                 NavigationLink("", isActive: $chatConnectionManager.connectedToChat) {
-                    LazyView(SelectionView(cacheManager: cacheManager, roomId: $chatConnectionManager.roomId))
+                    LazyView(SelectionView(cacheManager: cacheManager, roomId: $chatConnectionManager.roomId, fetchRequest: makeSelectionViewFetchRequest(roomId: chatConnectionManager.roomId.safeUnwrapped)))
                 }
             }
             

@@ -13,9 +13,10 @@ struct SelectionView: View {
     let cacheManager: PersistenceController
     @Binding var roomId: String?
     
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(key: "column.key", ascending: true)]
-    ) var datasource: FetchedResults<Selection>
+    var fetchRequest: FetchRequest<Selection>
+    private var datasource: FetchedResults<Selection> {
+        fetchRequest.wrappedValue
+    }
         
     var body: some View {
         VStack {

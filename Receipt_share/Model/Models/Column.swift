@@ -21,9 +21,15 @@ class Column: NSManagedObject, DatabaseManageable {
     @NSManaged var selection: Column?
     
     public struct Object: Codable {
-        let id: String?
-        let key: Int64
-        let items: [Item.Object]?
+        var id: String?
+        var key: Int64
+        var items: [Item.Object]?
+        
+        init(id: String?, key: Int64, items: [Item.Object]?) {
+            self.id = id
+            self.key = key
+            self.items = items
+        }
     }
 
     static func save(_ id: String, key: Int, items: [Item]) -> Column {
